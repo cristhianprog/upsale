@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "app-cardapio-digital-21"
+  },
+    "targets": {
+    "app-cardapio-digital-21": {
+      "hosting": {
+        "admin-cd-21": [
+          "admin-cd-21"
+        ]
+      }
+    }
+  }
+}
