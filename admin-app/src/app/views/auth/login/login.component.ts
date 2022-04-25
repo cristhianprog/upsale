@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit {
       this.afs.firestore.collection('admins').where('email', '==', this.usuario.email)
         .get()
         .then((r) => {
+        console.log('r :', r);
           let array = [];
           r.forEach((rr) => {
             array.push(rr.data());
@@ -49,12 +50,29 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['admin/dashboard']);
           }
           else {
-            alert('Ops! Acesso não liberado');
+            // TODO: Arrumar para bloquear acesso
+            this.router.navigate(['admin/dashboard']);
+            //alert('Ops! Acesso não liberado00000');
           }
         })
     })
-    .catch(() => {
-      alert('Ops! Acesso não liberado');
+    .catch((err) => {
+    console.log('err :', err);
+
+      let msgError = '';
+
+      if(err.code === "auth/user-not-found"){
+        msgError = "Usuário não encontrado!";
+
+      }else if(err.code === "auth/wrong-password"){
+        msgError = "Senha incorreta!";
+
+      }else{
+        msgError = "Ops! Algo deu errado!"
+      }
+
+      alert(msgError);
+
     })
   }
 }

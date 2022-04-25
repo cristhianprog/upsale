@@ -5,12 +5,13 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyB_0JXSyub4zR8ZwB47zvHSNoLwq6u3SGk",
-    authDomain: "app-cardapio-digital-21.firebaseapp.com",
-    projectId: "app-cardapio-digital-21",
-    storageBucket: "app-cardapio-digital-21.appspot.com",
-    messagingSenderId: "1041597199997",
-    appId: "1:1041597199997:web:bff2a5424710db9331e314"
+    apiKey: "AIzaSyDHhyGFgAF06oK2N0IenLxhYuuisb278Ck",
+    authDomain: "carrapicho-acai-01-upsale.firebaseapp.com",
+    projectId: "carrapicho-acai-01-upsale",
+    storageBucket: "carrapicho-acai-01-upsale.appspot.com",
+    messagingSenderId: "1088000171134",
+    appId: "1:1088000171134:web:801534328d6e1347538c2f",
+    measurementId: "G-QJGQLQ4Y4S"
   }
  };
 /*

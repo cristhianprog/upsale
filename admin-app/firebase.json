@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "target": "admin-cd-21",
+    "target": "admin-carrapicho-upsale",
     "public": "dist",
     "rewrites": [
       {

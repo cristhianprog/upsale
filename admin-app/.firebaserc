@@ -1,12 +1,12 @@
 {
   "projects": {
-    "default": "app-cardapio-digital-21"
+    "default": "carrapicho-acai-01-upsale"
   },
     "targets": {
-    "app-cardapio-digital-21": {
+    "carrapicho-acai-01-upsale": {
       "hosting": {
-        "admin-cd-21": [
-          "admin-cd-21"
+        "admin-carrapicho-upsale": [
+          "admin-carrapicho-upsale"
         ]
       }
     }

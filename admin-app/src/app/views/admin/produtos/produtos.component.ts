@@ -18,6 +18,8 @@ export class ProdutosComponent implements OnInit {
     preco: null,
     adicionais: [],
     variacoes: [],
+    acompanhamentos: [],
+    qtdAcompanhamentos: null,
     imagem: null,
     categoria: null,
     descricao: null,
@@ -27,6 +29,7 @@ export class ProdutosComponent implements OnInit {
   fb;
   downloadURL: Observable<string>;
   opcional: string = null;
+  acompanhamento: string = null;
   adicional = {
     titulo: null,
     preco: null
@@ -42,6 +45,8 @@ export class ProdutosComponent implements OnInit {
 
   ngOnInit(): void {
     // this.afAuth.signInAnonymously();
+
+    console.log(' produtos :',  this.produtos);
     this.carregar()
   }
 
@@ -102,6 +107,25 @@ export class ProdutosComponent implements OnInit {
         console.log(this.produtos);
       })
   }
+
+  //Adicionar acompanhamento
+  addAcompanhamento() {
+
+    console.log(' this.produto.:', this.produto);
+    if (this.acompanhamento != '') {
+      this.produto.acompanhamentos.push({
+        titulo: this.acompanhamento,
+        checked: false
+      });
+      this.acompanhamento = '';
+    }
+  }
+
+  removerAcompanhamento(i) {
+    this.produto.acompanhamentos.splice(i, 1);
+  }
+
+  
 
   //Adicionar opcional
   addOpcional() {
@@ -166,6 +190,8 @@ export class ProdutosComponent implements OnInit {
       preco: null,
       adicionais: [],
       variacoes: [],
+      acompanhamentos: [],
+      qtdAcompanhamentos: null,
       imagem: null,
       categoria: null,
       descricao: null,
