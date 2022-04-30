@@ -26,6 +26,7 @@ export class HistoricoPage implements OnInit {
     if (items) {
       items.forEach(async item => {
         this.firebase.pedido(item).then((r) => {
+          if(r)
           this.pedidos.push(r)
           console.log('this.pedidos :', this.pedidos);
         })
