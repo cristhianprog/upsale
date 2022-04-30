@@ -122,6 +122,14 @@
         </ion-item>
       </ion-col>
     </ion-row>
+    <ion-row *ngIf="cliente.pagamentos[1].checked == true || cliente.pagamentos[2].checked == true ">
+      <ion-col size="12">
+        <ion-item>
+          <ion-label position="stacked">Bandeira do cartão:</ion-label>
+          <ion-input  type="tel" [(ngModel)]="cliente.bandeira"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
   </div>
 </ion-content>
 

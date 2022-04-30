@@ -25,16 +25,66 @@
 
       <!-- Produtos -->
       <ion-item *ngFor="let p of pedidos" >
-        <ion-row style="width: 100%;">
+        <ion-row style="width: 100%;" class="ion-padding-bottom">
           <ion-col size="12">
             <ion-label style="overflow:visible !important; color: rgb(61, 61, 61); font-size: 15px;">{{p.data.toDate() | date:'dd/MM/yyyy HH:mm'}}</ion-label>
-            <ion-label style="overflow:visible !important; color: rgb(61, 61, 61); font-size: 13px; font-weight: 700;">R${{p.total}}</ion-label>
-            <ion-badge color="primary"  style="font-size: 10px; position: relative; top:4px;margin-right: 10px; margin-bottom: 15px;" [style.background-color]="firebase.config.color">{{p.status}}</ion-badge>
+            <ion-row class="ion-justify-content-between">
+              <ion-col size="3">
+                <ion-label class="total-label">R${{p.total}}</ion-label>
+              </ion-col>
+              <ion-col size="3">
+                <ion-badge color="primary" class="status-badge " [style.background-color]="firebase.config.color">{{p.status}}</ion-badge>  
+              </ion-col>
+            </ion-row>
+         
+            <!-- Itens -->
+            <ion-grid *ngFor="let i of p.itens" class="itens-show">
+              <ion-row>
+                <ion-col size="auto">
+                  <span style="font-weight: 700;">{{i.quantidade}}x {{i.titulo}} | R${{i.preco}}</span>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size="auto">
+                  <!-- Observação -->
+                  <span *ngIf="i.obs" ><label style="font-weight: 700;">Obs:</label> {{i.obs}}</span>
+                </ion-col>
+              </ion-row>
+
+              <ion-row class="ion-padding-top">
+                <ion-col size="4" class="ion-padding" *ngIf="i.adicionais.length">
+                  <!-- Acompanhamentos -->
+                  <label style="font-weight: 700;">Acomp.</label>
+                  <div *ngFor='let a of i.acompanhamentos'>
+                    <p *ngIf="a.checked">+ {{a.titulo}}</p>
+                  </div>
+                </ion-col>
+                
+                <ion-col size="4" class="ion-padding" *ngIf="i.adicionais.length">
+                  <!-- Adicionais -->
+                  <label style="font-weight: 700;">Adicionais</label>
+                  <div *ngFor='let a of i.adicionais'>
+                    <p *ngIf="a.checked">+ {{a.titulo}} | R${{a.preco}}</p>
+                  </div>
+                </ion-col>
+             
+                <ion-col size="4" class="ion-padding" *ngIf="i.variacoes.length">
+                    <!-- Variações -->
+                  <label style="font-weight: 700;">Variações</label>
+                  <div *ngFor='let a of i.variacoes'>
+                    <p *ngIf="a.checked">{{a.titulo}}</p>
+                  </div>
+                </ion-col>
+             
+              </ion-row>
+              
+            </ion-grid>
+            <!-- Fim Itens -->
+            
           </ion-col>
         </ion-row>
       </ion-item>
 
-    
     </ion-list>
   </div>
 </ion-content>

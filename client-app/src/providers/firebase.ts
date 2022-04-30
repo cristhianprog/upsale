@@ -47,6 +47,23 @@ export class FirebaseService {
         })
     }
 
+    produto(id){
+        return new Promise<any>((resolve, reject) => {
+            //Recuperar categorias
+            this.afs.firestore.collection('produtos').where('id', '==', id).get().then((lista) => {
+                let array = [];
+                lista.forEach((item) => {
+                    //Formatar dado
+                    let obj = item.data();
+                    obj['id'] = item.id;
+                    array.push(obj);
+                });
+
+                resolve(array[0])
+            })
+        })
+    }
+
     produtosPorCategoria(categoriaId) {
         return new Promise<any>((resolve, reject) => {
             //Recuperar categorias

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ModalController, NavParams, ToastController } from '@ionic/angular';
 import { FirebaseService } from '../../providers/firebase';
 import { CarrinhoPage } from '../carrinho/carrinho.page';
+import { Produto } from '../models/produto';
 
 @Component({
   selector: 'app-modal',
@@ -10,31 +11,40 @@ import { CarrinhoPage } from '../carrinho/carrinho.page';
 })
 export class ModalPage implements OnInit {
 
-  produto;
+  produto: Produto;
+  novoProduto: Produto;
   quantidade = 1;
   obs: string = '';
+  disabledAcompanhamento: boolean = false;
 
   constructor(
     public modalController: ModalController,
     public firebase: FirebaseService,
     private navParams: NavParams,
     public toastController: ToastController
-  ) {
-    this.produto = this.navParams.get('produto');
-  }
+  ) {}
 
   ngOnInit() {
+
+    this.novoProduto = JSON.parse(JSON.stringify(this.navParams.get('produto')));
+
+    this.firebase.produto(this.novoProduto.id).then((respProduto)=>{
+      this.produto = respProduto;
+      this.novoProduto = JSON.parse(JSON.stringify(this.produto));
+    });
   }
 
   fechar() {
     this.modalController.dismiss();
+  
   }
 
   async adicionarAoCarrinho() {
     //Validar se precisa selecionar uma opção
-    if (this.produto.variacoes.length > 0) {
+    if (this.novoProduto.variacoes.length > 0) {
+      console.log('this.novoProduto :', this.novoProduto);
       let itemChecked = false;
-      this.produto.variacoes.forEach(item => {
+      this.novoProduto.variacoes.forEach(item => {
         if (item.checked) {
           itemChecked = true;
         }
@@ -60,9 +70,9 @@ export class ModalPage implements OnInit {
   }
 
   async finalizarAdicao() {
-    this.produto['quantidade'] = this.quantidade;
-    this.produto['obs'] = this.obs;
-    this.firebase.carrinho.push(this.produto);
+    this.novoProduto['quantidade'] = this.quantidade;
+    this.novoProduto['obs'] = this.obs;
+    this.firebase.carrinho.push(this.novoProduto);
     this.fechar();
 
     const toast = await this.toastController.create({
@@ -89,20 +99,26 @@ export class ModalPage implements OnInit {
 
   deixarApenasUmMarcado(index) {
     let i = 0;
-    for (i; i < this.produto.variacoes.length; i++) {
+    for (i; i < this.novoProduto.variacoes.length; i++) {
       if(i != index){
-        this.produto.variacoes[i].checked = false;
+        this.novoProduto.variacoes[i].checked = false;
       }
     }
   }
 
+  contarAcompSelecionados(){
+    const qtdAcompanhamento = this.novoProduto.acompanhamentos.filter(ac => ac.checked === true).length;
+    this.disabledAcompanhamento = qtdAcompanhamento >= this.novoProduto.qtdAcompanhamentos ? true : false;
+   
+  }
+
 
   recalcularTotal(i){
-    if(this.produto.adicionais[i].checked){
-      this.produto.preco = this.produto.preco + this.produto.adicionais[i].preco
+    if(this.novoProduto.adicionais[i].checked){
+      this.novoProduto.preco = this.novoProduto.preco + this.produto.adicionais[i].preco
     }
     else {
-      this.produto.preco = this.produto.preco - this.produto.adicionais[i].preco
+      this.novoProduto.preco = this.novoProduto.preco - this.produto.adicionais[i].preco
     }
   }
 

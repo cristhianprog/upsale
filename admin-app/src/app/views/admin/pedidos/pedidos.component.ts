@@ -136,6 +136,7 @@ export class PedidosComponent implements OnInit {
   }
 
   async filtrar(event: string, valid: string) {
+  console.log('valid :', valid);
 
     switch (valid) {
       case 'date':
@@ -168,6 +169,7 @@ export class PedidosComponent implements OnInit {
 
       this.carregar();
     }else{
+      console.log('this.api.pedidos :', this.api.pedidos);
 
       //filtra todos os campos em cada um 
       this.pedidos = this.api.pedidos.filter(a => 
@@ -176,20 +178,20 @@ export class PedidosComponent implements OnInit {
         //filter total
         (a.total.toString().toUpperCase().indexOf(this.eventTotal ? this.eventTotal : '') >= 0) && 
         //filter delivery
-        ( a.cliente.bairro.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ||
-          a.cliente.cep.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ||
-          a.cliente.cidade.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ||
-          a.cliente.complemento.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ||
-          a.cliente.nome.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ||
-          a.cliente.numero.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ||
-          a.cliente.observacao.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ||
-          a.cliente.rua.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ||
-          a.cliente.telefone.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ) &&
+        ( a.cliente.bairro?.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ||
+          a.cliente.cep?.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ||
+          a.cliente.cidade?.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ||
+          a.cliente.complemento?.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ||
+          a.cliente.nome?.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ||
+          a.cliente.numero?.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ||
+          a.cliente.observacao?.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ||
+          a.cliente.rua?.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ||
+          a.cliente.telefone?.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ) &&
         //filter payment
-        ( a.cliente.bandeira.toUpperCase().indexOf(this.eventPayment ? this.eventPayment : '') >= 0 || 
-          a.cliente.pagamento.toUpperCase().indexOf(this.eventPayment ? this.eventPayment : '') >= 0 ) &&
+        ( a.cliente.bandeira?.toUpperCase().indexOf(this.eventPayment ? this.eventPayment : '') >= 0 || 
+          a.cliente.pagamento?.toUpperCase().indexOf(this.eventPayment ? this.eventPayment : '') >= 0 ) &&
         // //filter status
-        a.status.toUpperCase().indexOf(this.eventStatus ? this.eventStatus : '') >= 0
+        a.status?.toUpperCase().indexOf(this.eventStatus ? this.eventStatus : '') >= 0
 
       );
     }

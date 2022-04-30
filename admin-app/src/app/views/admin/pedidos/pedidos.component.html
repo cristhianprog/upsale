@@ -74,25 +74,36 @@
       </thead>
       <tbody>
         <tr *ngFor="let p of pedidos" style="border-bottom: 1px solid rgb(211, 211, 211);">
+          <!-- data -->
           <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs  p-4 text-left">
             {{p.data.toDate() | date:'dd/MM/yyyy HH:mm'}}
           </th>
+           <!-- total -->
           <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs  p-4">
             R${{p.total}}
           </td>
+           <!-- pedido -->
           <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs  p-4">
             <div *ngFor="let item of p.itens"
               style="border-radius: 5px; border: rgb(187, 187, 187) 1px solid; padding: 5px">
               <span style="font-weight: 700;">{{item.quantidade}}x {{item.titulo}} | R${{item.preco}}</span>
 
+              <!-- Acompanhamentos -->
+              <div *ngFor='let a of item.acompanhamentos'>
+                <p *ngIf="a.checked">+ {{a.titulo}} | Acomp.</p>
+              </div>
               <!-- Adicionais -->
               <div *ngFor='let a of item.adicionais'>
                 <p *ngIf="a.checked">+ {{a.titulo}} | R${{a.preco}}</p>
               </div>
+              <!-- Variações -->
               <div *ngFor='let a of item.variacoes'>
                 <p *ngIf="a.checked">{{a.titulo}}</p>
               </div>
-              <p *ngIf="item.obs">Obs: {{item.obs}}</p>
+              <!-- Observação -->
+              <span *ngIf="item.obs" ><label style="font-weight: 700;">Obs:</label> {{item.obs}}</span>
+
+    
             </div>
 
           </td>
@@ -110,8 +121,9 @@
           <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs p-4">
             <div *ngFor="let pp of p.cliente.pagamentos">
               <p *ngIf="pp.checked">{{pp.titulo}}</p>
-              <p *ngIf="pp.checked && pp.id === 1"><b>(TROCO: {{p.cliente.troco}})</b></p>
-              <p *ngIf="pp.checked && pp.id === 3"><b>({{p.cliente.bandeira.toUpperCase()}})</b></p>
+              <p *ngIf="pp.checked && pp.titulo === 'Dinheiro'"><b>(TROCO: R${{p.cliente.troco}})</b></p>
+              <p *ngIf="pp.checked && pp.titulo === 'Crédito' || 
+                        pp.checked && pp.titulo === 'Débito'"><b>({{p.cliente.bandeira.toUpperCase()}})</b></p>
             </div>
 
           </td>

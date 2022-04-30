@@ -1,0 +1,13 @@
+[debug] [2022-04-30T06:00:19.983Z] ----------------------------------------------------------------------
+[debug] [2022-04-30T06:00:19.985Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\crist\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting
+[debug] [2022-04-30T06:00:19.986Z] CLI Version:   10.7.1
+[debug] [2022-04-30T06:00:19.986Z] Platform:      win32
+[debug] [2022-04-30T06:00:19.986Z] Node Version:  v16.14.2
+[debug] [2022-04-30T06:00:19.987Z] Time:          Sat Apr 30 2022 03:00:19 GMT-0300 (Horário Padrão de Brasília)
+[debug] [2022-04-30T06:00:19.987Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-04-30T06:00:20.052Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-04-30T06:00:20.053Z] > authorizing via signed-in user (cristhianprog@gmail.com)
+[debug] [2022-04-30T06:00:20.053Z] [iam] checking project carrapicho-acai-01-upsale for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2022-04-30T06:00:20.055Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/carrapicho-acai-01-upsale:testIamPermissions [none]
+[debug] [2022-04-30T06:00:20.055Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/carrapicho-acai-01-upsale:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, ToastController, AlertController, LoadingController } from '@ionic/angular';
 import { FirebaseService } from '../../providers/firebase'
 import { HttpClient } from '@angular/common/http';
+import { Cliente } from '../models/cliente';
 
 @Component({
   selector: 'app-carrinho',
@@ -12,30 +13,32 @@ export class CarrinhoPage implements OnInit {
 
   total = 0;
   step = 0;
-  cliente = {
-    nome: null,
-    cep: null,
-    rua: null,
-    bairro: null,
-    cidade: null,
-    complemento: "",
-    numero: null,
-    troco: "",
-    pagamentos: [
-     {
-       "titulo": 'Dinheiro',
-       "checked": false
-     },
-     {
-      "titulo": 'Débito',
-      "checked": false
-    },
-    {
-      "titulo": 'Crédito',
-      "checked": false
-    },
-    ]
-  }
+  cliente: Cliente = new Cliente;
+  
+  // cliente = {
+  //   nome: null,
+  //   cep: null,
+  //   rua: null,
+  //   bairro: null,
+  //   cidade: null,
+  //   complemento: "",
+  //   numero: null,
+  //   troco: "",
+  //   pagamentos: [
+  //    {
+  //      "titulo": 'Dinheiro',
+  //      "checked": false
+  //    },
+  //    {
+  //     "titulo": 'Débito',
+  //     "checked": false
+  //   },
+  //   {
+  //     "titulo": 'Crédito',
+  //     "checked": false
+  //   },
+  //   ]
+  // }
 
   constructor(
     public modalController: ModalController,
@@ -56,7 +59,8 @@ export class CarrinhoPage implements OnInit {
     let i = 0;
     for (i; i < this.cliente.pagamentos.length; i++) {
       if(i != index){
-        this.cliente.pagamentos[i].checked = false;
+        this.cliente.pagamentos[i]['checked'] = false;
+        this.cliente.pagamento = this.cliente.pagamentos[i]['titulo']
       }
     }
   }
@@ -107,7 +111,6 @@ export class CarrinhoPage implements OnInit {
   calcularCep(){
     if(this.cliente.cep.length > 7){
       this.http.get('https://viacep.com.br/ws/' + this.cliente.cep + '/json/').subscribe((r) => {
-        console.log(r)
         this.cliente.bairro = r['bairro'];
         this.cliente.rua = r['logradouro'];
         this.cliente.cidade = r['localidade']
@@ -119,7 +122,7 @@ export class CarrinhoPage implements OnInit {
   async enviar(){
     if(this.cliente.nome && this.cliente.cep){
       let pedido = {
-        cliente: this.cliente,
+        cliente: JSON.parse(JSON.stringify(this.cliente)), // TODO: verificar por que nao aceita o tipo Cliente
         itens: this.firebase.carrinho,
         status: 'aguardando',
         data: new Date(),
@@ -143,7 +146,6 @@ export class CarrinhoPage implements OnInit {
               });
               await loading.present();
 
-              
               //Enviar para o firebase
               this.firebase.pedir(pedido)
               .then(async (id) => {
