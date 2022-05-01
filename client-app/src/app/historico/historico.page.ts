@@ -28,7 +28,6 @@ export class HistoricoPage implements OnInit {
         this.firebase.pedido(item).then((r) => {
           if(r)
           this.pedidos.push(r)
-          console.log('this.pedidos :', this.pedidos);
         })
       });
     }

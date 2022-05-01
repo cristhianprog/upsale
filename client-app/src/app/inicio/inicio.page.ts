@@ -39,6 +39,7 @@ export class InicioPage implements OnInit {
         for (i; i < this.categorias.length; i++) {
          let produtos = await this.firebase.produtosPorCategoria(this.categorias[i]['id']);
          this.categorias[i]['produtos'] = produtos;
+         console.log('this.categorias :', this.categorias);
         }
       })
   }

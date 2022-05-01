@@ -24,6 +24,7 @@ export class FirebaseService {
                 this.afs.firestore.collection('config').doc('config').get().then((r) => {
                     //Atribuir a variavel global (para recuperarmos de outras paginas)
                     this.config = r.data();
+                    console.log('this.config :', this.config);
                     resolve(this.config);
                 })
             })
