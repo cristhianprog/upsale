@@ -57,7 +57,6 @@ import { ColorPickerModule } from 'ngx-color-picker';
 //Firebase
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
 import {
   AngularFireStorageModule,
@@ -70,6 +69,21 @@ import {
 import { AuthGuard } from "./guards/auth-guard.service";
 import { AuthService } from "./guards/verificador";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { HttpClientModule } from '@angular/common/http';
+import { IConfig, NgxMaskModule } from "ngx-mask";
+
+//currency pipe
+import { DEFAULT_CURRENCY_CODE, LOCALE_ID } from '@angular/core';
+import ptBr from '@angular/common/locales/pt';
+import { registerLocaleData } from '@angular/common';
+import { ModalModule } from "./components/modal/modal.module";
+import { environment } from "src/environments/environment";
+
+registerLocaleData(ptBr);
+
+
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
 
 
 @NgModule({
@@ -111,12 +125,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ProdutosComponent,
     CategoriasComponent,
     PedidosComponent
-    
+        
   ],
-  imports: [BrowserModule, AppRoutingModule, AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule, FormsModule, AngularFireStorageModule, ColorPickerModule, BrowserAnimationsModule,
+  imports: [BrowserModule, AppRoutingModule, AngularFireModule.initializeApp(environment.firebase),ModalModule,
+    AngularFireAuthModule, FormsModule, AngularFireStorageModule, ColorPickerModule, BrowserAnimationsModule, HttpClientModule,
+    NgxMaskModule.forRoot(),
+
     ],
-  providers: [AuthGuard, AuthService,],
+  providers: [
+    AuthGuard, 
+    AuthService,
+    { provide: LOCALE_ID, useValue: 'pt' },
+  ],
+  exports: [  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

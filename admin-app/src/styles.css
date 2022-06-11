@@ -15,6 +15,25 @@
     color: #fff !important
 }
 
+.msgErro{
+    color: rgb(233, 71, 71);
+    font-size: 18px;
+}
+
+.msgDicas{
+    color: #212529;
+    font-size: 12px;
+}
+
+.inputValor{
+    font-size: 12px;
+    box-shadow: 0 0 0 0.1rem #707b8d42;
+    border-radius: 5px;
+    width: 52px;
+    margin-left: 6px;
+    outline: none;
+}
+
 .remover {
     padding: 5px;
     border-radius: 5px;

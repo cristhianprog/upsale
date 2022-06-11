@@ -2,6 +2,7 @@
 
   <div class="rounded-t mb-0 px-4 py-3 border-0" style="margin-top: 30px;">
     <div class="flex flex-wrap items-center">
+      
       <div class="totalPedidos relative w-full px-4 max-w-full">
         <h3 class="font-semibold text-base text-gray-800">
           Pedidos
@@ -80,13 +81,13 @@
           </th>
            <!-- total -->
           <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs  p-4">
-            R${{p.total}}
+            {{p.total | currency:'BRL'}}
           </td>
            <!-- pedido -->
           <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs  p-4">
             <div *ngFor="let item of p.itens"
               style="border-radius: 5px; border: rgb(187, 187, 187) 1px solid; padding: 5px">
-              <span style="font-weight: 700;">{{item.quantidade}}x {{item.titulo}} | R${{item.preco}}</span>
+              <span style="font-weight: 700;">{{item.quantidade}}x {{item.titulo}} | {{item.preco | currency:'BRL'}}</span>
 
               <!-- Acompanhamentos -->
               <div *ngFor='let a of item.acompanhamentos'>
@@ -94,7 +95,7 @@
               </div>
               <!-- Adicionais -->
               <div *ngFor='let a of item.adicionais'>
-                <p *ngIf="a.checked">+ {{a.titulo}} | R${{a.preco}}</p>
+                <p *ngIf="a.checked">+ {{a.titulo}} | {{a.preco | currency:'BRL'}}</p>
               </div>
               <!-- Variações -->
               <div *ngFor='let a of item.variacoes'>
@@ -109,7 +110,7 @@
           </td>
           <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs  p-4">
             <p><span style="font-weight: 700;">Cliente: </span>{{p.cliente.nome}}</p>
-            <p><span style="font-weight: 700;">Telefone: </span>{{p.cliente.telefone}}</p>
+            <p><span style="font-weight: 700;">Telefone: </span>{{p.cliente.celular}}</p>
             <p><span style="font-weight: 700;">CEP: </span>{{p.cliente.cep}}</p>
             <p><span style="font-weight: 700;">Cidade: </span>{{p.cliente.cidade}}</p>
             <p><span style="font-weight: 700;">Rua: </span>{{p.cliente.rua}}</p>
@@ -121,9 +122,36 @@
           <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs p-4">
             <div *ngFor="let pp of p.cliente.pagamentos">
               <p *ngIf="pp.checked">{{pp.titulo}}</p>
-              <p *ngIf="pp.checked && pp.titulo === 'Dinheiro'"><b>(TROCO: R${{p.cliente.troco}})</b></p>
+              <p *ngIf="pp.checked && pp.titulo === 'Dinheiro'"><b>(TROCO: {{p.cliente.troco | currency:'BRL'}})</b></p>
               <p *ngIf="pp.checked && pp.titulo === 'Crédito' || 
                         pp.checked && pp.titulo === 'Débito'"><b>({{p.cliente.bandeira.toUpperCase()}})</b></p>
+                           
+              <div *ngIf="pp.checked && pp.titulo === 'Pix'">
+
+                <button type="button" class="btn btn-primary bg-indigo-500 text-white active:bg-indigo-600 text-xs font-bold uppercase px-3 py-1 rounded outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  data-bs-toggle="modal" style="background: #0d6efd; font-size: 10px;"  data-bs-target="#exampleModal" (click)="urlImagemPix = p.comprovantePix">
+                  Abrir comprovante
+                </button>
+
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Comprovante Pix</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="relative w-full mb-3" style="text-align: center;">
+                          <img [src]="urlImagemPix" style="width: 80%">
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
           </td>

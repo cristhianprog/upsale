@@ -23,6 +23,7 @@ export class ProdutosComponent implements OnInit {
     imagem: null,
     categoria: null,
     descricao: null,
+    serve: null
   }
   title = "cloudsSorage";
   selectedFile: File = null;
@@ -104,14 +105,12 @@ export class ProdutosComponent implements OnInit {
         });
 
         this.produtos = produtos;
-        console.log(this.produtos);
+        // console.log(this.produtos);
       })
   }
 
   //Adicionar acompanhamento
   addAcompanhamento() {
-
-    console.log(' this.produto.:', this.produto);
     if (this.acompanhamento != '') {
       this.produto.acompanhamentos.push({
         titulo: this.acompanhamento,
@@ -177,6 +176,13 @@ export class ProdutosComponent implements OnInit {
       });
       this.adicional.preco = '';
       this.adicional.titulo = '';
+    }else{
+
+      if(this.adicional.titulo != '')
+        alert('Informe um preço para adicionar o item');
+      else
+       alert('Informe um nome para adicionar o item');
+
     }
   }
 
@@ -195,12 +201,13 @@ export class ProdutosComponent implements OnInit {
       imagem: null,
       categoria: null,
       descricao: null,
+      serve: null,
     }
   }
   
 
   salvar() {
-    if (this.produto.titulo && this.produto.imagem && this.produto.descricao && 
+    if (this.produto.titulo &&  
       this.produto.preco && this.produto.categoria && this.novo) {
 
       this.afs.firestore.collection('produtos').add(this.produto)
@@ -210,7 +217,7 @@ export class ProdutosComponent implements OnInit {
           this.clearProduto()
           this.snackbar();
         })
-    }else if (this.produto.titulo && this.produto.imagem && this.produto.descricao && 
+    }else if (this.produto.titulo &&
         this.produto.preco && this.produto.categoria && this.update) {
       this.afs.firestore.collection('produtos').doc(this.produto['id']).update(this.produto)
         .then(()=>{
@@ -223,12 +230,26 @@ export class ProdutosComponent implements OnInit {
 
     }
     else {
-      alert('Por favor, preencha todos os campos');
+      let produto = this.produto;
+      let obrigatorios = ['titulo', 'preco', 'categoria'];
+      let mostrouAlerta:boolean = false;
+   
+      Object.keys(this.produto).forEach(function(item){
+        if(!produto[item] && obrigatorios.includes(item) && !mostrouAlerta){
+          if(item == "titulo")
+            item = "nome";
+
+          alert('Por favor, preencha o campo ' + item.toUpperCase());
+          mostrouAlerta = true;
+          return;
+        }
+        
+       });
+      
     }
   }
 
   snackbar() {
-  console.log('snackbar :', );
     // Get the snackbar DIV
     var x = document.getElementById("snackbar")
 

@@ -1,5 +1,5 @@
 <nav
-  class="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-no-wrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6"
+  class="md:fixed md:top-0 md:bottom-0 md:overflow-y-auto   shadow-xl bg-white flex flex-wrap items-center justify-between relative"
 >
   <div
     class="md:flex-col md:items-stretch md:min-h-full md:flex-no-wrap px-0 flex flex-wrap items-center justify-between w-full mx-auto"
@@ -20,7 +20,7 @@
       <span class="block sm:hidden">
         <!-- Tailwind Angular -->
       </span>
-      <span class="hidden sm:block">
+      <span class="hidden sm:block ml-3">
         Cardápio digital
       </span>
     </a>
@@ -36,7 +36,7 @@
     <!-- Collapse -->
     <div
       class="md:flex md:flex-col md:items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded"
-      [ngClass]="collapseShow"
+      [ngClass]="collapseShow" style="width: 256px !important;"
     >
       <!-- Collapse header -->
       <div
@@ -83,7 +83,7 @@
       </h6> -->
       <!-- Navigation -->
 
-      <ul class="md:flex-col md:min-w-full flex flex-col list-none">
+      <ul class="ml-3 md:flex-col md:min-w-full flex flex-col list-none">
         <li class="items-center">
           <a
             [routerLink]="['/admin/pedidos']"

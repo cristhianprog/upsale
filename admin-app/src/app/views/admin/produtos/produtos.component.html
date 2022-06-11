@@ -76,6 +76,17 @@
             [(ngModel)]="produto.descricao"></textarea>
         </div>
       </div>
+
+      <div class="w-full lg:w-6/12 px-4">
+        <div class="relative w-full mb-3">
+          <label class="block uppercase text-gray-700 text-xs font-bold mb-2 whiteTxt" htmlFor="grid-password">
+            Serve quantas pessoas?
+          </label>
+          <input type="number"
+            class="px-3 w-25 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
+            [(ngModel)]="produto.serve" />
+        </div>
+      </div>
     </div>
 
   </div>
@@ -97,7 +108,7 @@
       <div class="w-full lg:w-6/12 px-4">
         <div class="relative w-full mb-3">
           <label class="block uppercase text-gray-700 text-xs font-bold mb-2 whiteTxt" htmlFor="grid-password">
-            Título
+            Nome variação
           </label>
           <input type="text"
             class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
@@ -141,12 +152,12 @@
     <div class="flex flex-wrap" style="padding: 15px">
      
       <div class="d-flex flex-column w-full">
-        <div class="lg:w-3/12 px-4">
+        <div class="lg:w-4/12 px-4">
+          <label class="block uppercase text-gray-700 text-xs font-bold mb-2 whiteTxt" htmlFor="grid-password">
+            Quantidade máxima
+          </label>
           <div class="relative w-25 mb-3">
-            <label class="block uppercase text-gray-700 text-xs font-bold mb-2 whiteTxt" htmlFor="grid-password">
-              Quantidade máxima
-            </label>
-            <input type="text"
+            <input type="tel"
               class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
               [(ngModel)]="produto.qtdAcompanhamentos" />
           </div>
@@ -155,7 +166,7 @@
         <div class="w-full lg:w-6/12 px-4">
           <div class="relative w-full mb-3">
             <label class="block uppercase text-gray-700 text-xs font-bold mb-2 whiteTxt" htmlFor="grid-password">
-              Título
+              Nome Acompanhamento
             </label>
             <input type="text"
               class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
@@ -192,7 +203,7 @@
       <div class="relative w-full px-4 max-w-full flex-grow flex-1">
         <h3 style="margin-top: 20px;" class="font-semibold text-lg"
           [ngClass]="color === 'light' ? 'text-gray-800' : 'text-white'">
-          Adicionais
+          Adicionais (Definir preço para cada adicional)
         </h3>
       </div>
     </div>
@@ -202,7 +213,7 @@
       <div class="w-full lg:w-6/12 px-4">
         <div class="relative w-full mb-3">
           <label class="block uppercase text-gray-700 text-xs font-bold mb-2 whiteTxt" htmlFor="grid-password">
-            Título
+            Nome do adicional
           </label>
           <input type="text"
             class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"

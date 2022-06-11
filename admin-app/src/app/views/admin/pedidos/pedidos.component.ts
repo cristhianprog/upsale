@@ -36,6 +36,7 @@ export class PedidosComponent implements OnInit {
   eventDelivery: string = '';
   eventPayment: string = '';
   eventStatus: string = '';
+  urlImagemPix: string = '';
 
   constructor(
     private afs: AngularFirestore,
@@ -136,7 +137,6 @@ export class PedidosComponent implements OnInit {
   }
 
   async filtrar(event: string, valid: string) {
-  console.log('valid :', valid);
 
     switch (valid) {
       case 'date':
@@ -169,7 +169,6 @@ export class PedidosComponent implements OnInit {
 
       this.carregar();
     }else{
-      console.log('this.api.pedidos :', this.api.pedidos);
 
       //filtra todos os campos em cada um 
       this.pedidos = this.api.pedidos.filter(a => 
@@ -186,7 +185,7 @@ export class PedidosComponent implements OnInit {
           a.cliente.numero?.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ||
           a.cliente.observacao?.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ||
           a.cliente.rua?.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ||
-          a.cliente.telefone?.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ) &&
+          a.cliente.celular?.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ) &&
         //filter payment
         ( a.cliente.bandeira?.toUpperCase().indexOf(this.eventPayment ? this.eventPayment : '') >= 0 || 
           a.cliente.pagamento?.toUpperCase().indexOf(this.eventPayment ? this.eventPayment : '') >= 0 ) &&
