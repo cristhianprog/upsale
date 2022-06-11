@@ -22,6 +22,10 @@
       <ion-list-header style="margin-bottom: 15px; color: #fff" [style.background-color]="firebase.config.color">
         Pedidos
       </ion-list-header>
+      <!--
+      <ion-row class="ion-margin-bottom">
+        <button (click)="ataulizarPedido()">Atualizar <ion-icon name="sync"></ion-icon> </button>
+      </ion-row> -->
 
       <!-- Produtos -->
       <ion-item *ngFor="let p of pedidos" >
@@ -30,10 +34,10 @@
             <ion-label style="overflow:visible !important; color: rgb(61, 61, 61); font-size: 15px;">{{p.data.toDate() | date:'dd/MM/yyyy HH:mm'}}</ion-label>
             <ion-row class="ion-justify-content-between">
               <ion-col size="3">
-                <ion-label class="total-label">R${{p.total}}</ion-label>
+                <ion-label class="total-label">{{p.total | currency:'BRL'}} - Entrega: {{p.taxaDeEntrega === "0" ? 'Grátis' : p.taxaDeEntrega | currency:'BRL'}}</ion-label>
               </ion-col>
-              <ion-col size="3">
-                <ion-badge color="primary" class="status-badge " [style.background-color]="firebase.config.color">{{p.status}}</ion-badge>  
+              <ion-col size="4" style="text-align: end">
+                <ion-badge color="primary" class="status-badge " [style.background-color]="firebase.config.color">{{p.status.toUpperCase()}}</ion-badge>  
               </ion-col>
             </ion-row>
          
@@ -41,7 +45,7 @@
             <ion-grid *ngFor="let i of p.itens" class="itens-show">
               <ion-row>
                 <ion-col size="auto">
-                  <span style="font-weight: 700;">{{i.quantidade}}x {{i.titulo}} | R${{i.preco}}</span>
+                  <span style="font-weight: 700;">{{i.quantidade}}x {{i.titulo}} | {{i.preco | currency:'BRL'}}</span>
                 </ion-col>
               </ion-row>
               <ion-row>
@@ -64,7 +68,7 @@
                   <!-- Adicionais -->
                   <label style="font-weight: 700;">Adicionais</label>
                   <div *ngFor='let a of i.adicionais'>
-                    <p *ngIf="a.checked">+ {{a.titulo}} | R${{a.preco}}</p>
+                    <p *ngIf="a.checked">+ {{a.titulo}} | {{a.preco | currency:'BRL'}}</p>
                   </div>
                 </ion-col>
              

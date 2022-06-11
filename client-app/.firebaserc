@@ -5,8 +5,8 @@
     "targets": {
     "carrapicho-acai-01-upsale": {
       "hosting": {
-        "carrapicho-upsale": [
-          "carrapicho-upsale"
+        "carrapichoacai": [
+          "carrapichoacai"
         ]
       }
     }

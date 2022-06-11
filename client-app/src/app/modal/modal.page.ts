@@ -27,10 +27,15 @@ export class ModalPage implements OnInit {
   ngOnInit() {
 
     this.novoProduto = JSON.parse(JSON.stringify(this.navParams.get('produto')));
+    // console.log('this.novoProduto :', this.novoProduto.id);
 
     this.firebase.produto(this.novoProduto.id).then((respProduto)=>{
-      this.produto = respProduto;
-      this.novoProduto = JSON.parse(JSON.stringify(this.produto));
+      // console.log('respProduto :', respProduto);
+      if(respProduto){
+        this.produto = respProduto;
+        this.novoProduto = JSON.parse(JSON.stringify(this.produto));
+      }
+      
     });
   }
 
@@ -42,7 +47,7 @@ export class ModalPage implements OnInit {
   async adicionarAoCarrinho() {
     //Validar se precisa selecionar uma opção
     if (this.novoProduto.variacoes.length > 0) {
-      console.log('this.novoProduto :', this.novoProduto);
+      // console.log('this.novoProduto :', this.novoProduto);
       let itemChecked = false;
       this.novoProduto.variacoes.forEach(item => {
         if (item.checked) {
@@ -77,7 +82,8 @@ export class ModalPage implements OnInit {
 
     const toast = await this.toastController.create({
       message: this.produto.titulo + ' foi adicionado no seu carrinho!',
-      duration: 2000
+      duration: 2000,
+      position: 'top'
     });
     toast.present();
 
@@ -98,6 +104,8 @@ export class ModalPage implements OnInit {
   }
 
   deixarApenasUmMarcado(index) {
+  // console.log('index :', index);
+  // console.log('this.novoProduto.variacoes', this.novoProduto.variacoes)
     let i = 0;
     for (i; i < this.novoProduto.variacoes.length; i++) {
       if(i != index){

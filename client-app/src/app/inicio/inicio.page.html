@@ -27,18 +27,29 @@
         {{c.titulo}}
       </ion-list-header>
 
+      
       <!-- Produtos -->
-      <ion-item *ngFor="let p of c.produtos" lines='none' (click)="detalhesDoProduto(p)">
-        <ion-row style="width: 100%;">
-          <ion-col size="4">
-            <div class="produtoImagem" [style.background]="'url(' + p.imagem + ')'"></div>
-          </ion-col>
-          <ion-col size="8">
-            <ion-label style="overflow:visible !important; color: rgb(61, 61, 61); font-size: 15px;">{{p.titulo}}</ion-label>
-            <p style="color: rgb(85, 85, 85); font-size: 11px; margin-top: 0px; margin-bottom: 0px; width: 100%;">{{p.descricao}}</p>
-            <p  [style.color]="firebase.config.color" style="font-size: 10px; position: relative; top: -5px">R${{p.preco}}</p>
-          </ion-col>
-        </ion-row>
+      <ion-item *ngFor="let p of c.produtos" lines='none' (click)="detalhesDoProduto(p)" button="true">
+        <ion-grid>
+          <ion-row style="width: 96%;">
+            <ion-col size="12" class="ion-margin-end"> 
+              <ion-row style="margin: 5px; margin-bottom: 0px;">
+                <ion-col size="auto">
+                  <div class="produtoImagem" [style.background]="'url(' + p.imagem + ')'"></div>
+                </ion-col>
+                <ion-col size="auto" class="ion-margin">
+                  <p class="preco-produto" [style.color]="firebase.config.color">{{p.preco | currency:'BRL'}}</p>
+                  <p *ngIf="p.serve > 0" class="descricao-produto"><b>serve {{p.serve > 1 ? p.serve + ' pessoas' : p.serve + ' pessoa'}}</b></p>
+
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col size="12" style="margin: 5px; margin-top: 8px;">
+              <ion-label class="titulo-produto">{{p.titulo}}</ion-label>
+              <p class="descricao-produto">{{p.descricao}}</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-item>
 
     

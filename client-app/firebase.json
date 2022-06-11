@@ -1,6 +1,6 @@
 {
   "hosting": {
-      "target": "carrapicho-upsale",
+      "target": "carrapichoacai",
       "public": "www",
       "ignore": [
           "firebase.json",

@@ -1,5 +1,5 @@
 #container {
-    padding: 30px;
+    padding: 15px;
 }
 
 .promoCard {
@@ -48,12 +48,12 @@ ion-col {
 }
 
 .produtoImagem {
-    width: 70px;
+    width: 120px;
     height: 70px;
     background-size: cover !important;
     background-position-x: center !important;
     background-position-y: center !important;
-    border-radius: 100px;
+    border-radius: 5px;
 }
 
 .imagemProduto {
@@ -105,4 +105,29 @@ ion-list {
 
 ion-label {
     color: #000 !important;
+}
+
+
+.chavePix{
+    font-size: 18px;
+    background-color: #2dd36f59;
+    border-radius: 28px;
+    padding: 10px;
+    box-shadow: 4px -3px 5px #4244406b;
+}
+
+.fileInput{
+    font-size: 18px;
+    background-color: #d5d5d559;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 4px -3px 5px #4244406b;
+    width: 100%;
+    color: #000;
+}
+
+.labelPix{
+    color: #000;
+    font-size: 16px;
+
 }

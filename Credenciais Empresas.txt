@@ -1,0 +1,115 @@
+######################### admin-carrapicho-acai-upsale #################
+
+---------- .firebaserc ---------
+{
+  "projects": {
+    "default": "carrapicho-acai-01-upsale"
+  },
+    "targets": {
+    "carrapicho-acai-01-upsale": {
+      "hosting": {
+        "admin-carrapichoacai": [
+          "admin-carrapichoacai"
+        ]
+      }
+    }
+  }
+}
+
+---------------- firebase.json ------------
+{
+  "hosting": {
+    "target": "admin-carrapichoacai",
+    "public": "dist",
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ],
+    "headers": [
+      {
+        "source": "/service-worker.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      }
+    ]
+  }
+}
+
+------------- enviroments ---------------
+  const firebaseConfig = {
+    apiKey: "AIzaSyDHhyGFgAF06oK2N0IenLxhYuuisb278Ck",
+    authDomain: "carrapicho-acai-01-upsale.firebaseapp.com",
+    projectId: "carrapicho-acai-01-upsale",
+    storageBucket: "carrapicho-acai-01-upsale.appspot.com",
+    messagingSenderId: "1088000171134",
+    appId: "1:1088000171134:web:801534328d6e1347538c2f",
+    measurementId: "G-QJGQLQ4Y4S"
+  };
+
+
+
+######################################################################
+
+################ admin-malagueta-restaurante #########################
+
+---------- .firebaserc ---------
+{
+  "projects": {
+    "default": "malagueta-restaurante"
+  },
+    "targets": {
+    "malagueta-restaurante": {
+      "hosting": {
+        "admin-malagueta-restaurante": [
+          "admin-malagueta-restaurante"
+        ]
+      }
+    }
+  }
+}
+
+------------ firebase.json ----------
+{
+  "hosting": {
+    "target": "admin-malagueta-restaurante",
+    "public": "dist",
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ],
+    "headers": [
+      {
+        "source": "/service-worker.js",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "no-cache"
+          }
+        ]
+      }
+    ]
+  }
+}
+
+
+------------- enviroments ---------------
+export const environment = {
+  production: false,
+  firebase: {
+    apiKey: "AIzaSyCvCCZ7ZldfULaivgVpik-nFnIbNuSVrcM",
+    authDomain: "malagueta-restaurante.firebaseapp.com",
+    projectId: "malagueta-restaurante",
+    storageBucket: "malagueta-restaurante.appspot.com",
+    messagingSenderId: "5910737554",
+    appId: "1:5910737554:web:be8642eac4ed469ce56c4b",
+    measurementId: "G-1DW699YN87"
+  }
+ };

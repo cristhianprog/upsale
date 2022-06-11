@@ -8,4 +8,5 @@ export class Pedido extends Produto{
     data: string = "";
     status: string = "";
     total: number = 0;
+    comprovantePix: string = ""
 }

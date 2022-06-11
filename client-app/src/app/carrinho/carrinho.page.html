@@ -30,7 +30,7 @@
           <ion-col size="8">
             <ion-label style="overflow:visible !important; color: rgb(61, 61, 61); font-size: 15px;">{{p.titulo}} <ion-icon (click)="remover(i)" name="trash-outline" style="color: red; margin-left: 10px; font-size: 13px"></ion-icon></ion-label>
             <p style="color: rgb(85, 85, 85); font-size: 11px; margin-top: 0px; margin-bottom: 0px; width: 100%;">{{p.descricao}}</p>
-            <p  [style.color]="firebase.config.color" style="font-size: 10px; position: relative; top: -5px"><ion-badge color="primary"  style="font-size: 10px; position: relative; top:4px;margin-right: 10px;" [style.background-color]="firebase.config.color">{{p.quantidade}}x</ion-badge> R${{p.preco}}</p>
+            <p  [style.color]="firebase.config.color" style="font-size: 10px; position: relative; top: -5px"><ion-badge color="primary"  style="font-size: 10px; position: relative; top:4px;margin-right: 10px;" [style.background-color]="firebase.config.color">{{p.quantidade}}x</ion-badge> {{p.preco | currency:'BRL'}}</p>
           </ion-col>
         </ion-row>
       </ion-item>
@@ -54,28 +54,39 @@
 
         <ion-col size="6">
           <ion-item>
-            <ion-label position="stacked">CEP</ion-label>
-            <ion-input (ionChange)="calcularCep()" [(ngModel)]="cliente.cep" type="tel"></ion-input>
+            <ion-label position="stacked">Celular</ion-label>
+            <ion-input [(ngModel)]="cliente.celular" type="text" maxlength="15" mask="(00) 00000-0000"></ion-input>
           </ion-item>
         </ion-col>
+
+        
       </ion-row>
 
       <ion-row>
         <ion-col size="6">
           <ion-item>
+            <ion-label position="stacked">CEP</ion-label>
+            <ion-input (ionChange)="calcularCep($event.target.value)" 
+              (keyup.enter)= "calcularCep($event.target.value)" [(ngModel)]="cliente.cep" type="tel" maxlength="9"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item>
             <ion-label position="stacked">Rua</ion-label>
             <ion-input disabled [(ngModel)]="cliente.rua"></ion-input>
           </ion-item>
-        </ion-col>
+        </ion-col>     
+      </ion-row>
 
-        <ion-col size="3">
+      <ion-row>
+        <ion-col size="6">
           <ion-item>
             <ion-label position="stacked">Bairro</ion-label>
             <ion-input disabled [(ngModel)]="cliente.bairro"></ion-input>
           </ion-item>
         </ion-col>
 
-        <ion-col size="3">
+        <ion-col size="6">
           <ion-item>
             <ion-label position="stacked">Cidade</ion-label>
             <ion-input disabled [(ngModel)]="cliente.cidade"></ion-input>
@@ -98,7 +109,15 @@
           </ion-item>
         </ion-col>
       </ion-row>
+      <ion-col size="3">
+        <!-- com taxa de entrega -->
+        <ion-badge *ngIf="veirificaTaxa?.id === 3" class="status-badge " [style.background-color]="'#f39347'">{{veirificaTaxa?.texto}} {{valorTaxa | currency:'BRL'}}</ion-badge>  
+        <!-- entrega gratis -->
+        <ion-badge *ngIf="veirificaTaxa?.id === 2" class="status-badge " [style.background-color]="'#5a9a57'">{{veirificaTaxa?.texto}}</ion-badge> 
+        <!-- nao possui cobertura -->
+        <ion-badge *ngIf="veirificaTaxa?.id === 1" class="status-badge " [style.background-color]="'#eb3b3b'">{{veirificaTaxa?.texto}}</ion-badge> 
 
+      </ion-col>
     
     </ion-list>
 
@@ -122,7 +141,7 @@
         </ion-item>
       </ion-col>
     </ion-row>
-    <ion-row *ngIf="cliente.pagamentos[1].checked == true || cliente.pagamentos[2].checked == true ">
+    <ion-row *ngIf="cliente.pagamentos[1].checked == true || cliente.pagamentos[2].checked == true">
       <ion-col size="12">
         <ion-item>
           <ion-label position="stacked">Bandeira do cartão:</ion-label>
@@ -130,20 +149,37 @@
         </ion-item>
       </ion-col>
     </ion-row>
+    <ion-row *ngIf="cliente.pagamentos[3]?.checked == true">
+      <ion-col size="12" class="ion-text-center">
+        <ion-label position="center" class="labelPix">Chave Pix:</ion-label>
+      </ion-col>
+      <ion-col size="12" class="ion-text-center ion-margin-top" (click)="copiaTexto()">
+        <div class="chavePix">
+          <ion-label position="stacked" >{{config.pix}}</ion-label>
+        </div>
+      </ion-col>
+
+      <ion-row style="margin-top: 35px; justify-content: center;">
+        <ion-label position="stacked" class="labelPix" style="margin-bottom: 14px;">Inserir comprovante Pix: </ion-label>
+        <input type="file" name="cerInput" class="fileInput"
+          (change)="comprovanteImagem=$event" accept="image/*">  
+      </ion-row>
+  
+    </ion-row>
   </div>
 </ion-content>
 
 <ion-footer (click)="enviar()" *ngIf="step == 1"  mode="ios">
   <ion-toolbar >
     <div class="footerDiv" [style.background-color]="firebase.config.color">
-      <ion-title style="color: #fff; font-size: 14px;">Enviar pedido por R${{total}}</ion-title>
+      <ion-title style="color: #fff; font-size: 14px;">Enviar pedido por {{total | currency:'BRL'}}</ion-title>
     </div>
   </ion-toolbar>
 </ion-footer>
 <ion-footer (click)="finalizar()" *ngIf="step == 0"  mode="ios">
   <ion-toolbar >
     <div class="footerDiv" [style.background-color]="firebase.config.color">
-      <ion-title style="color: #fff; font-size: 14px;">Finalizar pedido por R${{total}}</ion-title>
+      <ion-title style="color: #fff; font-size: 14px;">Finalizar pedido por {{total | currency:'BRL'}}</ion-title>
     </div>
   </ion-toolbar>
 </ion-footer>

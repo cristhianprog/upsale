@@ -7,12 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { ModalPageRoutingModule } from './modal-routing.module';
 
 import { ModalPage } from './modal.page';
+import {NgxMaskIonicModule} from 'ngx-mask-ionic';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    NgxMaskIonicModule,
     ModalPageRoutingModule
   ],
   declarations: [ModalPage]

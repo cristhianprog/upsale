@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FirebaseService } from '../../providers/firebase';
 import { ModalController } from '@ionic/angular';
 
@@ -7,9 +7,10 @@ import { ModalController } from '@ionic/angular';
   templateUrl: './historico.page.html',
   styleUrls: ['./historico.page.scss'],
 })
-export class HistoricoPage implements OnInit {
+export class HistoricoPage implements OnInit, OnDestroy {
 
   pedidos = [];
+  intervalo: any;
 
   constructor(
     public firebase: FirebaseService,
@@ -22,15 +23,46 @@ export class HistoricoPage implements OnInit {
 
   async ngOnInit() {
     //Recuperar detalhes dos pedidos
+    this.ataulizarPedido();
+
+    // this.intervalo = setInterval(() => {
+    //   this.ataulizarPedido();
+    // }, 5000);
+
+        
+  }
+
+  ngOnDestroy(){
+      clearInterval(this.intervalo);
+  }
+
+  ataulizarPedido(){
+    let newPedidos = [];
+
     let items = JSON.parse(localStorage.getItem('historicoPedidos'));
     if (items) {
+      var proms = [];
       items.forEach(async item => {
-        this.firebase.pedido(item).then((r) => {
-          if(r)
-          this.pedidos.push(r)
-        })
+        var promise = this.firebase.pedido(item)
+        
+        promise.then((r) => {
+          if(r){
+            r.idProduto = item;
+            newPedidos.push(r)
+          }
+        
+        });
+
+        proms.push(promise);
+
+      });
+
+      Promise.all(proms)
+      .then(() => {
+        // valores são lançados apenas quando todos os promises são resolvidos
+        this.pedidos = newPedidos;
+
       });
     }
   }
-
 }

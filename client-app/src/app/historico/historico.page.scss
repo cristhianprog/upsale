@@ -1,5 +1,5 @@
 #container {
-    padding: 30px;
+    padding: 15px;
 }
 
 .promoCard {
@@ -26,8 +26,7 @@
 
 .status-badge {
     font-size: 10px; 
-    position: relative; 
-    top:4px;
+    top: 4px;
     margin-right: 10px; 
     margin-bottom: 8px;
 }
@@ -69,15 +68,6 @@ ion-list-header {
 
 ion-col {
     padding: 0px;
-}
-
-.produtoImagem {
-    width: 70px;
-    height: 70px;
-    background-size: cover !important;
-    background-position-x: center !important;
-    background-position-y: center !important;
-    border-radius: 100px;
 }
 
 .imagemProduto {

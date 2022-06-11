@@ -1,5 +1,5 @@
 #container {
-    padding: 30px;
+    padding: 15px;
 }
 
 .promoCard {
@@ -47,22 +47,13 @@ ion-col {
     padding: 0px;
 }
 
-.produtoImagem {
-    width: 70px;
-    height: 70px;
-    background-size: cover !important;
-    background-position-x: center !important;
-    background-position-y: center !important;
-    border-radius: 100px;
-}
-
 .imagemProduto {
     background-size: cover !important;
     background-position-x: center !important;
     background-position-y: center !important;
-    height: 100px;
-    width: 100px;
-    border-radius: 100px;
+    height: 135px;
+    width: 100%;
+    border-radius: 5px;
 }
 
 .containerProduto {

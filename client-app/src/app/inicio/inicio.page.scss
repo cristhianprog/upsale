@@ -34,6 +34,9 @@ ion-menu-buttons {
 ion-item {
     --padding-start: 0px;
     margin-bottom: 15px;
+    border-right: 3px solid grey;
+    box-shadow: 2px 3px 6px 0px #8888886e;
+    width: 98%;
 }
 
 ion-list-header {
@@ -48,14 +51,39 @@ ion-col {
     padding: 0px;
 }
 
+
+.titulo-produto {
+    overflow:visible !important; 
+    color: rgb(61, 61, 61); 
+    font-size: 15px;
+}
+
+.descricao-produto {
+    color: rgb(85, 85, 85); 
+    font-size: 11px; 
+    margin-top: 3px; 
+    margin-bottom: 0px;
+    width: 92%;
+    min-width: 100px;
+}
+
+.preco-produto {
+    font-size: 16px; 
+    position: relative; 
+    margin: 0px;
+    //top: -5px;
+    //position: absolute;
+}
+
 .produtoImagem {
-    width: 70px;
+    width: 120px;
     height: 70px;
     background-size: cover !important;
     background-position-x: center !important;
     background-position-y: center !important;
-    border-radius: 100px;
+    border-radius: 5px;
 }
+
 .nomeLoja {
     -webkit-text-stroke-width: 0.2px;
     -webkit-text-stroke-color: #000;

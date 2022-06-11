@@ -49,16 +49,20 @@ export class FirebaseService {
     }
 
     produto(id){
+    console.log('id :', id);
         return new Promise<any>((resolve, reject) => {
             //Recuperar categorias
             this.afs.firestore.collection('produtos').where('id', '==', id).get().then((lista) => {
+            console.log('lista :', lista);
                 let array = [];
                 lista.forEach((item) => {
+                console.log('item :', item);
                     //Formatar dado
                     let obj = item.data();
                     obj['id'] = item.id;
                     array.push(obj);
                 });
+                console.log('array :', array);
 
                 resolve(array[0])
             })

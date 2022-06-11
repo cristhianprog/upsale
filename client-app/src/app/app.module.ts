@@ -20,11 +20,21 @@ import { FirebaseService } from '../providers/firebase';
 //HTTP
 import { HttpClientModule } from '@angular/common/http';
 
+import {NgxMaskIonicModule} from 'ngx-mask-ionic';
+
+//Currency pipe
+import { DEFAULT_CURRENCY_CODE, LOCALE_ID} from '@angular/core';
+import ptBr from '@angular/common/locales/pt';
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(ptBr);
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
+    NgxMaskIonicModule.forRoot(),
     IonicModule.forRoot(),
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
@@ -34,6 +44,7 @@ import { HttpClientModule } from '@angular/common/http';
   providers: [
     FirebaseService,
     StatusBar,
+    { provide: LOCALE_ID, useValue: 'pt' },
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

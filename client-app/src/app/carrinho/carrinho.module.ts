@@ -7,12 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { CarrinhoPageRoutingModule } from './carrinho-routing.module';
 
 import { CarrinhoPage } from './carrinho.page';
+import {NgxMaskIonicModule} from 'ngx-mask-ionic';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    NgxMaskIonicModule,
     CarrinhoPageRoutingModule
   ],
   declarations: [CarrinhoPage]
