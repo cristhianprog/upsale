@@ -4,6 +4,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireStorage } from "@angular/fire/storage";
 import { map, finalize } from "rxjs/operators";
 import { Observable } from "rxjs";
+import { Router } from "@angular/router";
+import { RelatoriosService } from "src/app/relatorios.service";
 
 @Component({
   selector: "app-produtos",
@@ -23,7 +25,8 @@ export class ProdutosComponent implements OnInit {
     imagem: null,
     categoria: null,
     descricao: null,
-    serve: null
+    serve: null,
+    posicao: null
   }
   title = "cloudsSorage";
   selectedFile: File = null;
@@ -41,12 +44,16 @@ export class ProdutosComponent implements OnInit {
   constructor(
     private afs: AngularFirestore,
     private afAuth: AngularFireAuth,
-    private storage: AngularFireStorage
-  ) { }
+    private storage: AngularFireStorage,
+    private relatoriosService: RelatoriosService
+  ) {
+
+    this.relatoriosService.mostraInfoHeaderVar = false;
+
+  }
 
   ngOnInit(): void {
     // this.afAuth.signInAnonymously();
-
     console.log(' produtos :',  this.produtos);
     this.carregar()
   }
@@ -80,6 +87,22 @@ export class ProdutosComponent implements OnInit {
   }
 
   carregar() {
+
+    //Listar produtos
+    this.afs.firestore.collection('produtos').get()
+    .then((r) => {
+      let produtos = [];
+      r.forEach((rr) => {
+        let obj = rr.data();
+        obj['id'] = rr.id;
+        produtos.push(obj);
+      });
+
+      this.produtos = produtos;
+
+      console.log(this.produtos);
+    })
+
     //Listar categorias
     this.afs.firestore.collection('categorias').get()
     .then((r) => {
@@ -87,26 +110,30 @@ export class ProdutosComponent implements OnInit {
       r.forEach((rr) => {
         let obj = rr.data();
         obj['id'] = rr.id;
+        obj['produtos'] = this.produtos.filter((produto) => produto.categoria ===  rr.id)
+
+        //ordena produtos
+        obj['produtos'].sort(function (a, b) {
+          if (a.posicao > b.posicao) {
+            return 1;
+          }
+          if (a.posicao < b.posicao) {
+            return -1;
+          }
+          // a must be equal to b
+          return 0;
+        });
+
         categorias.push(obj);
       });
 
+
+
       this.categorias = categorias;
-      // console.log(this.categorias);
+      console.log('catregorias' , this.categorias);
     })
 
-    //Listar produtos
-    this.afs.firestore.collection('produtos').get()
-      .then((r) => {
-        let produtos = [];
-        r.forEach((rr) => {
-          let obj = rr.data();
-          obj['id'] = rr.id;
-          produtos.push(obj);
-        });
 
-        this.produtos = produtos;
-        // console.log(this.produtos);
-      })
   }
 
   //Adicionar acompanhamento
@@ -124,7 +151,7 @@ export class ProdutosComponent implements OnInit {
     this.produto.acompanhamentos.splice(i, 1);
   }
 
-  
+
 
   //Adicionar opcional
   addOpcional() {
@@ -137,13 +164,98 @@ export class ProdutosComponent implements OnInit {
     }
   }
 
+  subir(index, categoriaId): void{
+    let produtosCategoria;//this.categorias.filter((categoria) => categoria.id === categoriaId);
+    let idxCatg;
+
+    this.categorias.map((cat, idx) =>{
+      if(cat.id === categoriaId){
+        produtosCategoria = cat;
+        idxCatg = idx;
+      }
+
+    })
+
+    let terminaFor = false;
+    produtosCategoria.produtos.forEach(async (p, idx) => {
+
+      if(index === p.posicao && !terminaFor){
+
+        //atualiza primeiro item
+        this.categorias[idxCatg]['produtos'][index].posicao = index - 1;
+        this.produto = this.categorias[idxCatg]['produtos'][index];
+        await this.salvarIndex();
+
+        //atualiza segundo item
+        let proxItem = index - 1;
+        this.categorias[idxCatg]['produtos'][proxItem].posicao = index;
+        this.produto = this.categorias[idxCatg]['produtos'][proxItem];
+        await this.salvarIndex();
+        terminaFor = true;
+        this.ordenarCategorais();
+      }
+    })
+
+  }
+
+  descer(index, categoriaId): void{
+
+    let produtosCategoria;//this.categorias.filter((categoria) => categoria.id === categoriaId);
+    let idxCatg;
+    this.categorias.map((cat, idx) =>{
+      if(cat.id === categoriaId){
+        produtosCategoria = cat;
+        idxCatg = idx;
+      }
+
+    })
+
+    let terminaFor = false;
+    produtosCategoria.produtos.forEach(async (p, idx) => {
+
+      if(index === p.posicao && !terminaFor){
+
+        //atualiza primeiro item
+        this.categorias[idxCatg]['produtos'][index].posicao = index + 1;
+        this.produto = this.categorias[idxCatg]['produtos'][index];
+        await this.salvarIndex();
+
+        //atualiza segundo item
+        let proxItem = index + 1;
+        this.categorias[idxCatg]['produtos'][proxItem].posicao = index;
+        this.produto = this.categorias[idxCatg]['produtos'][proxItem];
+        await this.salvarIndex();
+        terminaFor = true;
+        this.ordenarCategorais();
+      }
+    })
+
+  }
+
+  ordenarCategorais(){
+
+    this.categorias.forEach(categoria =>{
+        //ordena produtos
+        categoria['produtos'].sort(function (a, b) {
+        if (a.posicao > b.posicao) {
+          return 1;
+        }
+        if (a.posicao < b.posicao) {
+          return -1;
+        }
+        return 0;
+      });
+    })
+
+  }
+
   editar(id){
     this.update = true;
     this.afs.firestore.collection('produtos').doc(id).get()
       .then((d) => {
         this.produto = JSON.parse(JSON.stringify(d.data())) ;
         this.produto['id'] = id;
-  
+
       })
     }
 
@@ -161,7 +273,7 @@ export class ProdutosComponent implements OnInit {
   }
 
   back() {
-    this.novo = false; 
+    this.novo = false;
     this.update = false;
     this.clearProduto();
   }
@@ -202,13 +314,31 @@ export class ProdutosComponent implements OnInit {
       categoria: null,
       descricao: null,
       serve: null,
+      posicao: null
     }
   }
-  
+
+  salvarIndex(){
+    if (this.produto.titulo &&
+      this.produto.preco && this.produto.categoria) {
+
+        this.afs.firestore.collection('produtos').doc(this.produto['id']).update(this.produto)
+          .then(()=>{
+            this.clearProduto();
+      })
+    }
+  }
+
 
   salvar() {
-    if (this.produto.titulo &&  
-      this.produto.preco && this.produto.categoria && this.novo) {
+
+    if (this.produto.titulo && this.produto.preco && this.produto.categoria && this.novo) {
+
+      this.categorias.map(resp => {
+        if(resp.id === this.produto.categoria){
+          this.produto.posicao = resp.produtos.length; //pega a posição para ordenar
+        }
+      });
 
       this.afs.firestore.collection('produtos').add(this.produto)
         .then(() => {
@@ -217,23 +347,22 @@ export class ProdutosComponent implements OnInit {
           this.clearProduto()
           this.snackbar();
         })
-    }else if (this.produto.titulo &&
-        this.produto.preco && this.produto.categoria && this.update) {
+    }else if (this.produto.titulo && this.produto.preco && this.produto.categoria && this.update) {
+
       this.afs.firestore.collection('produtos').doc(this.produto['id']).update(this.produto)
         .then(()=>{
           this.update = false;
           this.carregar();
           this.clearProduto();
           this.snackbar();
-
       })
-
     }
     else {
+
       let produto = this.produto;
       let obrigatorios = ['titulo', 'preco', 'categoria'];
       let mostrouAlerta:boolean = false;
-   
+
       Object.keys(this.produto).forEach(function(item){
         if(!produto[item] && obrigatorios.includes(item) && !mostrouAlerta){
           if(item == "titulo")
@@ -243,9 +372,9 @@ export class ProdutosComponent implements OnInit {
           mostrouAlerta = true;
           return;
         }
-        
+
        });
-      
+
     }
   }
 

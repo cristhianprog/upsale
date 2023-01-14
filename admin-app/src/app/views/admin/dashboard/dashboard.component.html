@@ -82,7 +82,7 @@
             />
         </div>
       </div>
-  
+
       <div class="w-full lg:w-6/12 px-4">
         <div class="relative w-full mb-3">
           <label class="block uppercase text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">
@@ -157,7 +157,7 @@
         <p class="msgErro" *ngIf="erroBairos">Cidade não possui bairro cadastro. Verificar com o suporte técnico.</p>
         <div class="row" *ngIf="!erroBairos">
           <div *ngFor="let bairro of bairros" class="col-12 col-sm-6 col-lg-4">
-            <label>  
+            <label>
             <input type="checkbox"
                     name="bairros"
                     (change)="alteraBairrosGratis()"
@@ -170,12 +170,274 @@
                       [(ngModel)]="bairro.valor"/>
             <!-- </div> -->
           </div>
-          <p class="mt-3 msgDicas">* Marque os bairros que sua empresa atende com a entrega.</p>
-          <p class="msgDicas">* Coloque o valor R$ 0 para os bairros com Entrega Grátis.</p>
-          <p class="msgDicas">* Separe com vírgula ( , ) os centavos.</p>
+          <div>
+            <p class="mt-3 msgDicas">* Marque os bairros que sua empresa atende com a entrega.</p>
+            <p class="msgDicas">* Coloque o valor R$ 0 para os bairros com Entrega Grátis.</p>
+            <p class="msgDicas">* Separe com vírgula ( , ) os centavos.</p>
+          </div>
+
         </div>
       </div>
     </div>
+
+    <div class="w-full lg:w-12/12 px-4 mt-5 pt-1" style="padding-left: 0px !important;">
+      <div class="relative w-full mb-3">
+        <label class="block uppercase text-gray-700 text-xs font-bold mb-2" htmlFor="grid-password">
+          Horário de funcionamento
+        </label>
+        <div class="flex mt-3 mb-3" style="align-self: center;">
+          <label class="block text-gray-700 font-bold mr-3" style="font-size: 13px; align-self: center; min-width: 80px" htmlFor="grid-password">
+            DOMINGO:
+          </label>
+
+          <div class="d-flex flex-col">
+            <div class="flex mb-2">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 1 - </h3>
+              <input [(ngModel)]="config.funcionamento.domingo.hora1.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.domingo.hora1.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+            <div class="flex  mb-2">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 2 - </h3>
+              <input [(ngModel)]="config.funcionamento.domingo.hora2.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.domingo.hora2.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+            <div class="flex  mb-2">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 3 - </h3>
+              <input [(ngModel)]="config.funcionamento.domingo.hora3.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.domingo.hora3.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+            <div class="flex">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 4 - </h3>
+              <input [(ngModel)]="config.funcionamento.domingo.hora4.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.domingo.hora4.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+          </div>
+        </div>
+
+        <span class="w-full lg:w-12/12 px-4 py-4">---------------------------------------------------------------------------------------------</span>
+
+        <div class="flex mt-3 mb-3" style="align-self: center;">
+          <label class="block text-gray-700 font-bold mr-3" style="font-size: 13px; align-self: center; min-width: 80px" htmlFor="grid-password">
+            SEGUNDA:
+          </label>
+
+          <div class="d-flex flex-col">
+            <div class="flex mb-2">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 1 - </h3>
+              <input [(ngModel)]="config.funcionamento.segunda.hora1.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.segunda.hora1.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+            <div class="flex  mb-2">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 2 - </h3>
+              <input [(ngModel)]="config.funcionamento.segunda.hora2.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.segunda.hora2.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+            <div class="flex  mb-2">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 3 - </h3>
+              <input [(ngModel)]="config.funcionamento.segunda.hora3.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.segunda.hora3.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+            <div class="flex">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 4 - </h3>
+              <input [(ngModel)]="config.funcionamento.segunda.hora4.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.segunda.hora4.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+          </div>
+        </div>
+
+        <span class="w-full lg:w-12/12 px-4 py-4">---------------------------------------------------------------------------------------------</span>
+
+        <div class="flex mt-3 mb-3" style="align-self: center;">
+          <label class="block text-gray-700 font-bold mr-3" style="font-size: 13px; align-self: center; min-width: 80px" htmlFor="grid-password">
+            TERÇA:
+          </label>
+
+          <div class="d-flex flex-col">
+            <div class="flex mb-2">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 1 - </h3>
+              <input [(ngModel)]="config.funcionamento.terca.hora1.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.terca.hora1.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+            <div class="flex  mb-2">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 2 - </h3>
+              <input [(ngModel)]="config.funcionamento.terca.hora2.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.terca.hora2.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+            <div class="flex  mb-2">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 3 - </h3>
+              <input [(ngModel)]="config.funcionamento.terca.hora3.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.terca.hora3.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+            <div class="flex">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 4 - </h3>
+              <input [(ngModel)]="config.funcionamento.terca.hora4.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.terca.hora4.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+          </div>
+        </div>
+
+        <span class="w-full lg:w-12/12 px-4 py-4">---------------------------------------------------------------------------------------------</span>
+
+        <div class="flex mt-3 mb-3" style="align-self: center;">
+          <label class="block text-gray-700 font-bold mr-3" style="font-size: 13px; align-self: center; min-width: 80px" htmlFor="grid-password">
+            QUARTA:
+          </label>
+
+          <div class="d-flex flex-col">
+            <div class="flex mb-2">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 1 - </h3>
+              <input [(ngModel)]="config.funcionamento.quarta.hora1.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.quarta.hora1.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+            <div class="flex  mb-2">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 2 - </h3>
+              <input [(ngModel)]="config.funcionamento.quarta.hora2.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.quarta.hora2.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+            <div class="flex  mb-2">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 3 - </h3>
+              <input [(ngModel)]="config.funcionamento.quarta.hora3.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.quarta.hora3horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+            <div class="flex">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 4 - </h3>
+              <input [(ngModel)]="config.funcionamento.quarta.hora4.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.quarta.hora4.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+          </div>
+        </div>
+
+        <span class="w-full lg:w-12/12 px-4 py-4">---------------------------------------------------------------------------------------------</span>
+
+        <div class="flex mt-3 mb-3" style="align-self: center;">
+          <label class="block text-gray-700 font-bold mr-3" style="font-size: 13px; align-self: center; min-width: 80px" htmlFor="grid-password">
+            QUINTA:
+          </label>
+
+          <div class="d-flex flex-col">
+            <div class="flex mb-2">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 1 - </h3>
+              <input [(ngModel)]="config.funcionamento.quinta.hora1.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.quinta.hora1.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+            <div class="flex  mb-2">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 2 - </h3>
+              <input [(ngModel)]="config.funcionamento.quinta.hora2.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.quinta.hora2.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+            <div class="flex  mb-2">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 3 - </h3>
+              <input [(ngModel)]="config.funcionamento.quinta.hora3.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.quinta.hora3.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+            <div class="flex">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 4 - </h3>
+              <input [(ngModel)]="config.funcionamento.quinta.hora4.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.quinta.hora4.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+          </div>
+        </div>
+
+        <span class="w-full lg:w-12/12 px-4 py-4">---------------------------------------------------------------------------------------------</span>
+
+        <div class="flex mt-3 mb-3" style="align-self: center;">
+          <label class="block text-gray-700 font-bold mr-3" style="font-size: 13px; align-self: center; min-width: 80px" htmlFor="grid-password">
+            SEXTA:
+          </label>
+
+          <div class="d-flex flex-col">
+            <div class="flex mb-2">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 1 - </h3>
+              <input [(ngModel)]="config.funcionamento.sexta.hora1.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.sexta.hora1.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+            <div class="flex  mb-2">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 2 - </h3>
+              <input [(ngModel)]="config.funcionamento.sexta.hora2.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.sexta.hora2.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+            <div class="flex  mb-2">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 3 - </h3>
+              <input [(ngModel)]="config.funcionamento.sexta.hora3.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.sexta.hora3.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+            <div class="flex">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 4 - </h3>
+              <input [(ngModel)]="config.funcionamento.sexta.hora4.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.sexta.hora4.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+          </div>
+        </div>
+
+        <span class="w-full lg:w-12/12 px-4 py-4">---------------------------------------------------------------------------------------------</span>
+
+        <div class="flex mt-3 mb-3" style="align-self: center;">
+          <label class="block text-gray-700 font-bold mr-3" style="font-size: 13px; align-self: center; min-width: 80px" htmlFor="grid-password">
+            SÁBADO:
+          </label>
+
+          <div class="d-flex flex-col">
+            <div class="flex mb-2">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 1 - </h3>
+              <input [(ngModel)]="config.funcionamento.sabado.hora1.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.sabado.hora1.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+            <div class="flex  mb-2">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 2 - </h3>
+              <input [(ngModel)]="config.funcionamento.sabado.hora2.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.sabado.hora2.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+            <div class="flex  mb-2">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 3 - </h3>
+              <input [(ngModel)]="config.funcionamento.sabado.hora3.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.sabado.hora3.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+            <div class="flex">
+              <h3 class="block text-gray-700 font-bold" style="font-size: 12px; min-width: fit-content; align-self: center;">Horário 4 - </h3>
+              <input [(ngModel)]="config.funcionamento.sabado.hora4.horaInicio" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+              <span class="block text-gray-700 font-bold ml-3 mr-3" style="font-size: 12px; min-width: fit-content; align-self: center;">ATÉ</span>
+              <input [(ngModel)]="config.funcionamento.sabado.hora4.horaFinal" class="ml-2 px-2 py-1 placeholder-gray-400 text-gray-700 bg-white rounded shadow" type="time">
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-5">
+          <p class="mt-3 msgDicas">* Coloque horário apenas nos dias em que a emrpesa irá efetuar atendimento.</p>
+          <p class="msgDicas">* Se a empreesa não abre <b>Domingo</b>, por exemplo, não precisa preencher nenhum dos 4 horários.</p>
+          <p class="msgDicas">* Se no <b>Sábado</b> sua empresa funciona somente das <u><b>8h até 12h</b></u>, por exemplo, marque apenas o <b>Horário 1</b> com essa faixa de tempo, o restante dos horários do <b>Sábado</b> deixe em branco.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- fim horario de funcionamento -->
 
   </div>
 
@@ -190,6 +452,6 @@
       </div>
     </div>
   </div>
-  
+
 </div>
 <div id="snackbar">Salvo com sucesso</div>

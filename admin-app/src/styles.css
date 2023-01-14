@@ -11,6 +11,10 @@
     text-align: center;
 }
 
+th.mat-sort-header-sorted {
+  color: black;
+}
+
 .whiteTxt {
     color: #fff !important
 }
@@ -47,6 +51,20 @@
     flex: 100;
 }
 
+.tabsStyle{
+  background-color: #441616;
+}
+
+.tabsStyle .mat-tab-label .mat-tab-label-content {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  color: #fff;
+
+}
+
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
@@ -54,7 +72,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /* snackbar css*/
 
-    
+
   /* The snackbar - position it at the bottom and in the middle of the screen */
   #snackbar {
       visibility: hidden; /* Hidden by default. Visible on click */
@@ -70,37 +88,47 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
       left: 50%; /* Center the snackbar */
       bottom: 30px; /* 30px from the bottom */
   }
-  
+
   /* Show the snackbar when clicking on a button (class added with JavaScript) */
   .show {
       visibility: visible !important; /* Show the snackbar */
-  
+
   /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
   However, delay the fade out process for 2.5 seconds */
       -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
       animation: fadein 0.5s, fadeout 0.5s 2.5s;
   }
-  
+
   /* Animations to fade the snackbar in and out */
   @-webkit-keyframes fadein {
       from {bottom: 0; opacity: 0;}
       to {bottom: 30px; opacity: 1;}
   }
-  
+
   @keyframes fadein {
       from {bottom: 0; opacity: 0;}
       to {bottom: 30px; opacity: 1;}
   }
-  
+
   @-webkit-keyframes fadeout {
       from {bottom: 30px; opacity: 1;}
       to {bottom: 0; opacity: 0;}
   }
-  
+
   @keyframes fadeout {
       from {bottom: 30px; opacity: 1;}
       to {bottom: 0; opacity: 0;}
   }
 
-  
+  @media print {
+    :host {
+      display: none;
+    }
+  }
+
+  #resumo-cliente p {
+    margin: 1px;
+  }
+
+
 /* snackbar css end*/

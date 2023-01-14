@@ -4,6 +4,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireStorage } from "@angular/fire/storage";
 import { map, finalize } from "rxjs/operators";
 import { Observable } from "rxjs";
+import { RelatoriosService } from "src/app/relatorios.service";
 
 @Component({
   selector: "app-categorias",
@@ -22,8 +23,12 @@ export class CategoriasComponent implements OnInit {
   constructor(
     private afs: AngularFirestore,
     private afAuth: AngularFireAuth,
-    private storage: AngularFireStorage
-  ) { }
+    private storage: AngularFireStorage,
+    private relatoriosService: RelatoriosService
+  ) {
+    this.relatoriosService.mostraInfoHeaderVar = false;
+
+  }
 
   ngOnInit(): void {
     // this.afAuth.signInAnonymously();
@@ -31,7 +36,7 @@ export class CategoriasComponent implements OnInit {
   }
 
   newCategory(){
-    this.novo = true; 
+    this.novo = true;
     this.clearCategory();
   }
 
@@ -42,7 +47,7 @@ export class CategoriasComponent implements OnInit {
   }
 
   back() {
-    this.novo = false; 
+    this.novo = false;
     this.update = false;
     this.clearCategory();
   }
@@ -69,7 +74,7 @@ export class CategoriasComponent implements OnInit {
       .then(() => {
         this.carregar()
       })
-		}     
+		}
   }
 
   editar(id){
@@ -102,7 +107,7 @@ export class CategoriasComponent implements OnInit {
           this.clearCategory();
           this.snackbar();
 
-        }) 
+        })
     }
   }
 

@@ -47,14 +47,14 @@
       <ion-row>
         <ion-col size="6">
           <ion-item>
-            <ion-label position="stacked">Nome</ion-label>
+            <ion-label position="stacked">Nome*</ion-label>
             <ion-input [(ngModel)]="cliente.nome"></ion-input>
           </ion-item>
         </ion-col>
 
         <ion-col size="6">
           <ion-item>
-            <ion-label position="stacked">Celular</ion-label>
+            <ion-label position="stacked">Celular*</ion-label>
             <ion-input [(ngModel)]="cliente.celular" type="text" maxlength="15" mask="(00) 00000-0000"></ion-input>
           </ion-item>
         </ion-col>
@@ -65,7 +65,7 @@
       <ion-row>
         <ion-col size="6">
           <ion-item>
-            <ion-label position="stacked">CEP</ion-label>
+            <ion-label position="stacked">CEP*</ion-label>
             <ion-input (ionChange)="calcularCep($event.target.value)" 
               (keyup.enter)= "calcularCep($event.target.value)" [(ngModel)]="cliente.cep" type="tel" maxlength="9"></ion-input>
           </ion-item>
@@ -97,7 +97,7 @@
       <ion-row>
         <ion-col size="6">
           <ion-item>
-            <ion-label position="stacked">Número</ion-label>
+            <ion-label position="stacked">Número*</ion-label>
             <ion-input [(ngModel)]="cliente.numero" type="tel"></ion-input>
           </ion-item>
         </ion-col>

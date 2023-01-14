@@ -9,6 +9,8 @@ import { HttpClient } from '@angular/common/http';
 import { bairrosPorCidades } from "src/assets/cep/bairrosPorCidades";
 import { Bairro } from "src/app/models/bairro";
 import { Endereco } from "src/app/models/endereco";
+import { RelatoriosService } from "src/app/relatorios.service";
+import { DiasFuncionamento } from "src/app/models/dias-funcionamento";
 
 
 @Component({
@@ -35,7 +37,7 @@ export class DashboardComponent implements OnInit {
   //     cidade: "",
   //     estado: "",
   //     numero: ""
-  //   } 
+  //   }
   // };
   downloadURL: Observable<string>;
   selectedFile: File = null;
@@ -51,9 +53,10 @@ export class DashboardComponent implements OnInit {
     private afAuth: AngularFireAuth,
     private http: HttpClient,
     private cdr: ChangeDetectorRef,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private relatoriosService: RelatoriosService
   ) {
-
+      this.relatoriosService.mostraInfoHeaderVar = false;
   }
 
   ngOnInit() {
@@ -127,6 +130,8 @@ export class DashboardComponent implements OnInit {
   }
 
   carregar() {
+    this.config
+    console.log('this.config inicio:', this.config);
     this.afs.firestore.collection('config').doc('config').get()
     .then((d) => {
       let dataConfig = d.data();
@@ -135,8 +140,10 @@ export class DashboardComponent implements OnInit {
       }
       this.config = Object.assign({}, new ConfiguracaoAdministracao , JSON.parse(JSON.stringify(dataConfig)));
       this.configOriginal = JSON.parse(JSON.stringify(dataConfig));
+      console.log('this.config :', this.config);
+      console.log('this.configOriginal :', this.configOriginal);
       this.carregaBairros();
-          
+
     })
 
     //Listar pedidos
@@ -152,7 +159,7 @@ export class DashboardComponent implements OnInit {
       this.pedidos = pedidos;
     })
   }
-  
+
   carregaBairros(){
 
     if(!this.config.bairros){
@@ -174,7 +181,7 @@ export class DashboardComponent implements OnInit {
           this.bairros = bairrosPorCidades[this.config.endereco['cidade']]
           this.erroBairos = false;
           this.cdr.detectChanges()
-  
+
         }else{
           this.erroBairos = true;
         }
@@ -199,7 +206,7 @@ export class DashboardComponent implements OnInit {
       this.config['bairros'] = this.bairros;
       resolve(null);
     });
-  
+
   }
 
 
@@ -231,15 +238,33 @@ export class DashboardComponent implements OnInit {
     })
   }
 
-  salvar(){
-    this.alteraBairrosGratis().then(resp => {
+  validaCampos(): Promise<void>{
+    return new Promise<void>((resolve) => {
+      if(this.config.funcionamento){
+        resolve(null);
+      }else{
+        this.config.funcionamento = new DiasFuncionamento();
+        console.log('this.config func:', this.config);
+        resolve(null);
+      }
+    });
+
+  }
+
+
+  async salvar(){
+    console.log('this.config :', this.config);
+
+    await this.validaCampos();
+
+    this.alteraBairrosGratis().then(() => {
       this.afs.firestore.collection('config').doc('config').update(this.config)
       .then(()=> {
         this.snackbar();
       })
-     
+
     });
-   
+
   }
 
   snackbar() {

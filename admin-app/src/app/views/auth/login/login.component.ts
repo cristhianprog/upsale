@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
 import firebase from 'firebase/app'
 
 @Component({
@@ -42,16 +42,16 @@ export class LoginComponent implements OnInit {
           r.forEach((rr) => {
             array.push(rr.data());
           });
-          
+
           if (array.length > 0) {
-            
+
 
             //Acesso liberado
-            this.router.navigate(['admin/dashboard']);
+            this.router.navigate(['admin/pedidos']);
           }
           else {
             // TODO: Arrumar para bloquear acesso
-            this.router.navigate(['admin/dashboard']);
+            this.router.navigate(['admin/pedidos']);
             //alert('Ops! Acesso não liberado00000');
           }
         })

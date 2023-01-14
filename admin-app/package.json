@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "fb:deploy": "firebase deploy --only hosting" ,
+    "fb:deploy": "firebase deploy --only hosting",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
@@ -33,6 +33,7 @@
     "bootstrap": "^5.1.3",
     "chart.js": "2.9.3",
     "firebase": "^8.10.1",
+    "firesql": "^2.0.2",
     "ngx-color-picker": "^11.0.0",
     "ngx-mask": "^12.0.0",
     "popper.js": "^1.16.1",

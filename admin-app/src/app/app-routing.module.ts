@@ -23,6 +23,8 @@ import { IndexComponent } from "./views/index/index.component";
 import { LandingComponent } from "./views/landing/landing.component";
 import { ProfileComponent } from "./views/profile/profile.component";
 import { AuthGuard } from './guards/auth-guard.service';
+import { RelatorioPedidosStatusComponent } from "./views/admin/relatorios/pedidos-status/relatorio-pedidos-status.component";
+import { RelatorioPedidosProdutoComponent } from "./views/admin/relatorios/pedidos-produto/relatorio-pedidos-produto.component";
 
 const routes: Routes = [
   // admin views
@@ -38,9 +40,23 @@ const routes: Routes = [
       { path: "produtos", component: ProdutosComponent },
       { path: "categorias", component: CategoriasComponent },
       { path: "pedidos", component: PedidosComponent },
+      {
+        path: 'relatorios', children: [
+            {
+              path: 'pedidos-status',
+              component: RelatorioPedidosStatusComponent
+            },
+            {
+              path: 'pedidos-produtos',
+              component: RelatorioPedidosProdutoComponent
+            },
+        ]
+    },
       { path: "", redirectTo: "dashboard", pathMatch: "full" },
     ],
   },
+
+
   // auth views
   {
     path: "auth",

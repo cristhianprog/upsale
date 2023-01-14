@@ -1,58 +1,101 @@
 <!-- Header -->
-<div class="relative bg-red-600 md:pt-32 pb-32 pt-12">
-  <div class="px-4 md:px-10 mx-auto w-full">
-    <div>
-      <!-- Card stats -->
-      <!-- <div class="flex flex-wrap">
-        <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+<div class="relative bg-red-600 md:pt-5 pb-32 pt-5">
+  <div *ngIf="mostraInfos" class="px-4 md:px-1 pt-1 mx-auto w-full">
+
+      <div class="justify-content-center relative row w-full px-4 pt-2 max-w-content flex-grow flex-1">
+        <div class="d-flex relative px-4 pt-4 max-w-full flex-grow flex-1" style="max-width: 330px;">
+          <h1>Data Inicial</h1>
+          <input [(ngModel)]="this.vDataInicial" class="py-1 my-2 placeholder-gray-300 text-gray-700 bg-gray-100 rounded text-sm shadow focus:outline-none focus:shadow-outline
+          w-full ease-linear transition-all duration-150" #inputDataInicial (change)="buscaPedidosHoje(); consutaPorSatus()" type="datetime-local" placeholder="Data Inicial">
+        </div>
+
+        <div class="d-flex relative px-4 pt-4 max-w-full flex-grow flex-1" style="max-width: 330px;">
+          <h1>Data Final</h1>
+          <input [(ngModel)]="this.vDataFinal" class="py-1 my-2 placeholder-gray-300 text-gray-700 bg-gray-100 rounded text-sm shadow focus:outline-none focus:shadow-outline
+          w-full ease-linear transition-all duration-150" #inputDataFinal (change)="buscaPedidosHoje(); consutaPorSatus()" type="datetime-local"  placeholder="Data Final">
+        </div>
+      </div>
+      <div class="flex flex-wrap justify-content-evenly">
+        <div class="w-full lg:w-6/12 xl:w-4/12 px-1 pt-2 pt-2" >
           <app-card-stats
-            statSubtitle="TRAFFIC"
-            statTitle="350,897"
+            statSubtitle="PEDIDOS HOJE"
+            statTitle={{this.pedidosHoje?.quantidade}}
+            statTitleValor={{this.pedidosHoje?.valor}}
             statArrow="up"
             statPercent="3.48"
             statPercentColor="text-green-500"
             statDescripiron="Since last month"
-            statIconName="far fa-chart-bar"
+            statIconName="fas fa-tag"
             statIconColor="bg-red-500"
           ></app-card-stats>
         </div>
-        <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+        <div class="w-full lg:w-6/12 xl:w-4/12 px-1 pt-2" >
           <app-card-stats
-            statSubtitle="NEW USERS"
-            statTitle="2,356"
-            statArrow="down"
-            statPercent="3.48"
-            statPercentColor="text-red-500"
-            statDescripiron="Since last week"
-            statIconName="fas fa-chart-pie"
-            statIconColor="bg-orange-500"
-          ></app-card-stats>
-        </div>
-        <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
-          <app-card-stats
-            statSubtitle="SALES"
-            statTitle="924"
-            statArrow="down"
-            statPercent="1.10"
-            statPercentColor="text-orange-500"
-            statDescripiron="Since yesterday"
-            statIconName="fas fa-users"
-            statIconColor="bg-pink-500"
-          ></app-card-stats>
-        </div>
-        <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
-          <app-card-stats
-            statSubtitle="PERFORMANCE"
-            statTitle="49,65%"
+            statSubtitle="ENTREGUES HOJE"
+            statTitle={{this.pedidosEntregues?.quantidade}}
+            statTitleValor={{this.pedidosEntregues?.valor}}
             statArrow="up"
             statPercent="12"
             statPercentColor="text-green-500"
             statDescripiron="Since last month"
-            statIconName="fas fa-percent"
+            statIconName="fas fa-check"
             statIconColor="bg-green-500"
           ></app-card-stats>
         </div>
-      </div> -->
-    </div>
+        <div class="w-full lg:w-6/12 xl:w-4/12 px-1 pt-2" >
+          <app-card-stats
+            statSubtitle="RECUSADOS HOJE"
+            statTitle={{this.pedidosRecusados?.quantidade}}
+            statTitleValor={{this.pedidosRecusados?.valor}}
+            statArrow="up"
+            statPercent="12"
+            statPercentColor="text-red-500"
+            statDescripiron="Since last month"
+            statIconName="fa fa-ban"
+            statIconColor="bg-red-300"
+          ></app-card-stats>
+        </div>
+        <div class="w-full lg:w-6/12 xl:w-4/12 px-1 pt-2" >
+          <app-card-stats
+            statSubtitle="AGUARDANDO"
+            statTitle={{this.pedidosAguardando?.quantidade}}
+            statTitleValor={{this.pedidosAguardando?.valor}}
+            statArrow="up"
+            statPercent="3.48"
+            statPercentColor="text-green-500"
+            statDescripiron="Since last month"
+            statIconName="fas fa-clock"
+            statIconColor="bg-orange-500"
+          ></app-card-stats>
+        </div>
+        <div class="w-full lg:w-6/12 xl:w-4/12 px-1 pt-2" >
+          <app-card-stats
+            statSubtitle="PREPARANDO"
+            statTitle={{this.pedidosPreparando?.quantidade}}
+            statTitleValor={{this.pedidosPreparando?.valor}}
+            statArrow="down"
+            statPercent="3.48"
+            statPercentColor="text-green-500"
+            statDescripiron="Since last week"
+            statIconName="fa fa-utensils"
+            statIconColor="bg-yellow-500"
+          ></app-card-stats>
+        </div>
+        <div class="w-full lg:w-6/12 xl:w-4/12 px-1 pt-2" >
+          <app-card-stats
+            statSubtitle="SAIU P/ ENTREGA"
+            statTitle={{this.pedidosSaiu?.quantidade}}
+            statTitleValor={{this.pedidosSaiu?.valor}}
+            statArrow="down"
+            statPercent="1.10"
+            statPercentColor="text-green-500"
+            statDescripiron="Since yesterday"
+            statIconName="fa fa-motorcycle"
+            statIconColor="bg-blue-500"
+          ></app-card-stats>
+        </div>
+
+      </div>
+
   </div>
 </div>

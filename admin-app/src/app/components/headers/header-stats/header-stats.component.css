@@ -1,0 +1,10 @@
+div h1 {
+  font-weight: 500;
+  width: 135px;
+  align-self: center;
+  color: white;
+}
+
+div input {
+  text-align: center;
+}

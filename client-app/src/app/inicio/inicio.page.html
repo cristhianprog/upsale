@@ -13,28 +13,37 @@
 
 <!-- Content -->
 <ion-content [fullscreen]="true" *ngIf="loaded">
-  <div id="container">
-    <!-- Nome Loja -->
-    <div class="ion-text-center ion-margin-bottom">
-      <label class="nomeLoja" [style.color]="firebase.config.color">{{firebase?.config?.nome.toUpperCase()}}</label>
-    </div>
-    <!-- Card de promocão -->
-    <div class="promoCard"  [style.background]="'url(' + firebase.config.banner + ')'"></div>
+  <!-- Card de promocão -->
+  <div class="promoCard"  [style.background]="'url(' + firebase.config.banner + ')'"></div>
 
+   <!-- Nome Loja -->
+   <div class="ion-text-center ion-margin-bottom" style="padding-top: 25px;">
+    <label class="nomeLoja" [style.color]="firebase.config.color">{{firebase?.config?.nome.toUpperCase()}}</label>
+  </div>
+
+  <!-- status funcionamento -->
+  <div id="container">
+    <ion-badge *ngIf="lojaAberta" class="status-horario" [style.background-color]="'#32CD32'">Aberto</ion-badge>  
+    <ion-badge *ngIf="!lojaAberta" class="status-horario" [style.background-color]="'#DC143C'">Fechado</ion-badge>  
+  </div>
+
+  <div id="container">
+    
     <!-- Categorias -->
-    <ion-list *ngFor="let c of categorias" style="margin-top: 20px;" mode="ios">
-      <ion-list-header style="margin-bottom: 15px; color: #fff" [style.background-color]="firebase.config.color">
-        {{c.titulo}}
+    <ion-list *ngFor="let c of categorias" mode="ios">
+      <ion-list-header *ngIf="c.produtos?.length > 0" style="margin-bottom: 15px; color: #fff" [style.background-color]="firebase.config.color">
+        {{c.titulo.toUpperCase()}}
       </ion-list-header>
 
       
       <!-- Produtos -->
-      <ion-item *ngFor="let p of c.produtos" lines='none' (click)="detalhesDoProduto(p)" button="true">
+      <ion-item *ngFor="let p of c.produtos" [disabled]="lojaAberta" lines='none' (click)="detalhesDoProduto(p)" button="true">
         <ion-grid>
           <ion-row style="width: 96%;">
             <ion-col size="12" class="ion-margin-end"> 
-              <ion-row style="margin: 5px; margin-bottom: 0px;">
+              <ion-row style="margin: 5px; margin-bottom: 0px; width: max-content; align-items: center;">
                 <ion-col size="auto">
+                  <ion-label class="titulo-produto" style="margin-bottom: 5px">{{p.titulo}}</ion-label>
                   <div class="produtoImagem" [style.background]="'url(' + p.imagem + ')'"></div>
                 </ion-col>
                 <ion-col size="auto" class="ion-margin">
@@ -45,7 +54,6 @@
               </ion-row>
             </ion-col>
             <ion-col size="12" style="margin: 5px; margin-top: 8px;">
-              <ion-label class="titulo-produto">{{p.titulo}}</ion-label>
               <p class="descricao-produto">{{p.descricao}}</p>
             </ion-col>
           </ion-row>

@@ -99,12 +99,14 @@
           [ngClass]="color === 'light' ? 'text-gray-800' : 'text-white'">
           Opções (variações do produto)
         </h3>
+        <h4 class="font-semibold text-lg" style="font-size: 12px;"
+        [ngClass]="color === 'light' ? 'text-gray-400' : 'text-white'">* O cliente poderá escolher apenas 1 opção por produto.</h4>
       </div>
     </div>
   </div>
   <div class="block w-full overflow-x-auto">
     <div class="flex flex-wrap" style="padding: 15px">
-     
+
       <div class="w-full lg:w-6/12 px-4">
         <div class="relative w-full mb-3">
           <label class="block uppercase text-gray-700 text-xs font-bold mb-2 whiteTxt" htmlFor="grid-password">
@@ -145,12 +147,14 @@
           [ngClass]="color === 'light' ? 'text-gray-800' : 'text-white'">
           Acompanhamentos (Gratuitos)
         </h3>
+        <h4 class="font-semibold text-lg" style="font-size: 12px;"
+        [ngClass]="color === 'light' ? 'text-gray-400' : 'text-white'">* O cliente poderá escolher a quantidade de opções de acordo com o campo QUANTIDADE MÁXIMA abaixo.</h4>
       </div>
     </div>
   </div>
   <div class="block w-full overflow-x-auto">
     <div class="flex flex-wrap" style="padding: 15px">
-     
+
       <div class="d-flex flex-column w-full">
         <div class="lg:w-4/12 px-4">
           <label class="block uppercase text-gray-700 text-xs font-bold mb-2 whiteTxt" htmlFor="grid-password">
@@ -162,7 +166,7 @@
               [(ngModel)]="produto.qtdAcompanhamentos" />
           </div>
         </div>
-  
+
         <div class="w-full lg:w-6/12 px-4">
           <div class="relative w-full mb-3">
             <label class="block uppercase text-gray-700 text-xs font-bold mb-2 whiteTxt" htmlFor="grid-password">
@@ -174,7 +178,7 @@
           </div>
         </div>
       </div>
-      
+
 
       <div class="w-full lg:w-12 px-4" *ngFor="let acomp of produto.acompanhamentos; let i = index">
         <div class="relative w-full mb-3">
@@ -205,6 +209,8 @@
           [ngClass]="color === 'light' ? 'text-gray-800' : 'text-white'">
           Adicionais (Definir preço para cada adicional)
         </h3>
+        <h4 class="font-semibold text-lg" style="font-size: 12px;"
+        [ngClass]="color === 'light' ? 'text-gray-400' : 'text-white'">* O cliente poderá escolher várias opções.</h4>
       </div>
     </div>
   </div>
@@ -269,6 +275,7 @@
 <!-- LISTA  -->
 <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded"
   [ngClass]="color === 'light' ? 'bg-white' : 'bg-red-900 text-white'" *ngIf="!novo && !update">
+
   <div class="rounded-t mb-0 px-4 py-3 border-0">
     <div class="flex flex-wrap items-center">
       <div class="relative w-full px-4 max-w-full flex-grow flex-1">
@@ -285,60 +292,82 @@
       </div>
     </div>
   </div>
-  <div class="block w-full overflow-x-auto">
-    <table class="items-center w-full bg-transparent border-collapse">
-      <thead>
-        <tr>
-          <th
-            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
-            [ngClass]="
-              color === 'light'
-                ? 'bg-gray-100 text-gray-600 border-gray-200'
-                : 'bg-red-800 text-red-300 border-red-700'
-            ">
-            Nome
-          </th>
-          <th
-            class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
-            [ngClass]="
-              color === 'light'
-                ? 'bg-gray-100 text-gray-600 border-gray-200'
-                : 'bg-red-800 text-red-300 border-red-700'
-            ">
-            Preço
-          </th>
-          <th
-            class="px-6 align-middle text-center border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
-            [ngClass]="
-            color === 'light'
-              ? 'bg-gray-100 text-gray-600 border-gray-200'
-              : 'bg-red-800 text-red-300 border-red-700'
-          ">
-            Ações
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let p of produtos">
-          <th
-            class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left flex items-center">
-            <img [src]="p.imagem" class="h-12 w-12 bg-white rounded-full border" alt="..." />
-            <span class="ml-3 font-bold" [ngClass]="color === 'light' ? 'text-gray-700' : 'text-white'">
-              {{p.titulo}}
-            </span>
-          </th>
-          <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
-            R${{p.preco}}
-          </td>
 
-          <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-right">
-            <div class="excluirDiv" (click)="editar(p.id)">Editar</div>
-            <div class="excluirDiv" (click)="excluir(p.id)">Excluir</div>
-          </td>
-        </tr>
+  <mat-tab-group class="tabsStyle" [color]="Accent" [backgroundColor]="'#fff'">
+    <mat-tab *ngFor="let c of categorias"  label="{{c.titulo}}">
+      <div class="block w-full overflow-x-auto">
+        <table class="items-center w-full bg-transparent border-collapse">
+          <thead>
+            <tr>
+              <th
+                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                [ngClass]="
+                  color === 'light'
+                    ? 'bg-gray-100 text-gray-600 border-gray-200'
+                    : 'bg-red-800 text-red-300 border-red-700'
+                ">
+                Nome
+              </th>
+              <th
+                class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                [ngClass]="
+                  color === 'light'
+                    ? 'bg-gray-100 text-gray-600 border-gray-200'
+                    : 'bg-red-800 text-red-300 border-red-700'
+                ">
+                Preço
+              </th>
+              <th
+                class="px-6 align-middle text-center border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                [ngClass]="
+                color === 'light'
+                  ? 'bg-gray-100 text-gray-600 border-gray-200'
+                  : 'bg-red-800 text-red-300 border-red-700'
+              ">
+                Ações
+              </th>
 
-      </tbody>
-    </table>
-  </div>
+              <th
+                class="px-6 align-middle text-center border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-no-wrap font-semibold text-left"
+                [ngClass]="
+                color === 'light'
+                  ? 'bg-gray-100 text-gray-600 border-gray-200'
+                  : 'bg-red-800 text-red-300 border-red-700'
+              ">
+                Ordenar
+              </th>
+            </tr>
+          </thead>
+          <tbody style="background-color: #e53e3e;">
+            <tr *ngFor="let p of c.produtos; let i = index" >
+              <th
+                class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-left flex items-center">
+                <img [src]="p.imagem" class="h-12 w-12 bg-white rounded-full border" alt="..." />
+                <span class="ml-3 font-bold" [ngClass]="color === 'light' ? 'text-gray-700' : 'text-white'">
+                  {{p.titulo}}
+                </span>
+              </th>
+              <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4">
+                R${{p.preco}}
+              </td>
+
+              <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-right">
+                <div class="excluirDiv" (click)="editar(p.id)">Editar</div>
+                <div class="excluirDiv" (click)="excluir(p.id)">Excluir</div>
+              </td>
+
+              <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4 text-right">
+                <div *ngIf="i > 0" class="excluirDiv" (click)="subir(i, c.id)">Subir</div>
+                <div *ngIf="c.produtos.length > i+1" class="excluirDiv" (click)="descer(i, c.id)">Descer</div>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+
+
 </div>
 <div id="snackbar">Salvo com sucesso</div>

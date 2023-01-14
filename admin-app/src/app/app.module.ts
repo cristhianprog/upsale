@@ -3,6 +3,12 @@ import { NgModule } from "@angular/core";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatMenuModule} from '@angular/material/menu';
+
+
 
 // layouts
 import { AdminComponent } from "./layouts/admin/admin.component";
@@ -79,12 +85,20 @@ import ptBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
 import { ModalModule } from "./components/modal/modal.module";
 import { environment } from "src/environments/environment";
+import { RelatoriosComponent } from "./views/admin/relatorios/relatorios.component";
+import { MatNativeDateModule } from "@angular/material/core";
+import { RelatorioPedidosProdutoComponent } from "./views/admin/relatorios/pedidos-produto/relatorio-pedidos-produto.component";
+import { RelatorioPedidosStatusComponent } from "./views/admin/relatorios/pedidos-status/relatorio-pedidos-status.component";
+import { MatTableModule } from "@angular/material/table";
+import { TableSortingExample } from "./views/admin/relatorios/teste-tabela/teste-tabela.component";
+import {MatSortModule} from '@angular/material/sort';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+
+
 
 registerLocaleData(ptBr);
 
-
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
-
 
 @NgModule({
   declarations: [
@@ -117,6 +131,7 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     MapsComponent,
     SettingsComponent,
     TablesComponent,
+    RelatoriosComponent,
     LoginComponent,
     RegisterComponent,
     IndexComponent,
@@ -124,16 +139,26 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     ProfileComponent,
     ProdutosComponent,
     CategoriasComponent,
-    PedidosComponent
-        
+    PedidosComponent,
+    RelatorioPedidosProdutoComponent,
+    RelatorioPedidosStatusComponent,
+    TableSortingExample
+
+
   ],
-  imports: [BrowserModule, AppRoutingModule, AngularFireModule.initializeApp(environment.firebase),ModalModule,
+  imports: [
+    BrowserModule,
+    MatTabsModule,
+    MatDatepickerModule,
+    MatProgressBarModule,
+    MatFormFieldModule, MatNativeDateModule, MatMenuModule, MatTabsModule, MatTableModule, MatSortModule,
+    AppRoutingModule, AngularFireModule.initializeApp(environment.firebase),ModalModule,
     AngularFireAuthModule, FormsModule, AngularFireStorageModule, ColorPickerModule, BrowserAnimationsModule, HttpClientModule,
     NgxMaskModule.forRoot(),
 
     ],
   providers: [
-    AuthGuard, 
+    AuthGuard,
     AuthService,
     { provide: LOCALE_ID, useValue: 'pt' },
   ],

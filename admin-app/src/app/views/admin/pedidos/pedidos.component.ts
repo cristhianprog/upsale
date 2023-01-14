@@ -5,14 +5,16 @@ import { AngularFireStorage } from "@angular/fire/storage";
 import { map, finalize } from "rxjs/operators";
 import { Observable } from "rxjs";
 import { ApiService } from '../../../api.service';
-
-
-
+import { RelatoriosService } from "src/app/relatorios.service";
+// import * as printJS from 'print-js';
+// import printJS from "print-js"
 @Component({
   selector: "app-pedidos",
   templateUrl: "./pedidos.component.html",
 })
 export class PedidosComponent implements OnInit {
+
+ resumoPedido: any;
 
   pedidos = [];
   config = {
@@ -28,22 +30,27 @@ export class PedidosComponent implements OnInit {
   downloadURL2: Observable<string>;
   selectedFile2: File = null;
   fb2;
-  newDate: string;
   filterValid = [];
   eventDate: string = '';
-  eventTotal: string = ''; 
+  eventTotal: string = '';
   eventOrder: string = '';
   eventDelivery: string = '';
   eventPayment: string = '';
   eventStatus: string = '';
   urlImagemPix: string = '';
 
+  private dataHoje = new Date().getFullYear().toString() + '-' + this.adicionaZero(new Date().getMonth()+1) + '-' + this.adicionaZero(new Date().getDate());
+  public vDataInicial: string = this.dataHoje + ' 00:00';
+  public vDataFinal: string = this.dataHoje + ' 23:59';
+
   constructor(
     private afs: AngularFirestore,
     private afAuth: AngularFireAuth,
     private api: ApiService,
-    private storage: AngularFireStorage
+    private storage: AngularFireStorage,
+    private relatoriosService: RelatoriosService
   ) {
+    this.relatoriosService.mostraInfoHeaderVar = true;
 
   }
 
@@ -75,6 +82,13 @@ export class PedidosComponent implements OnInit {
       });
   }
 
+  adicionaZero(numero){
+    if (numero <= 9)
+        return "0" + numero;
+    else
+        return numero;
+  }
+
   //Upload do banner
   onFileSelected2(event) {
     var n = Date.now();
@@ -104,44 +118,68 @@ export class PedidosComponent implements OnInit {
   }
 
 
-  async carregar() {
- 
-    this.afs.firestore.collection('config').doc('config').get()
-      .then((d) => {
-        this.config = JSON.parse(JSON.stringify(d.data()));
-    });
+  async carregar(): Promise<void> {
 
-    //Listar pedidos em tempo real
-    this.afs.collection('pedidos', ref => ref.orderBy('data', 'desc')).snapshotChanges().subscribe((r) => {
-      
-        let pedidos = [];
-        
-        r.forEach(async (rr) => {
-          let item = rr.payload.doc.data()
-          item['id'] = rr.payload.doc.id;
-          pedidos.push(item);
-          
-        })
+    return new Promise<void>((resolve) => {
+      this.afs.firestore.collection('config').doc('config').get()
+        .then((d) => {
+          this.config = JSON.parse(JSON.stringify(d.data()));
+      });
 
-        this.api.pedidos = pedidos;
-        this.pedidos = pedidos;
-        this.filtrar('','')
-      
-    });
+      //Listar pedidos em tempo real
+      this.afs.collection('pedidos', ref => ref.orderBy('data', 'desc')).snapshotChanges().subscribe((r) => {
+
+          let pedidos = [];
+
+          r.forEach(async (rr) => {
+            let item = rr.payload.doc.data()
+            item['id'] = rr.payload.doc.id;
+            pedidos.push(item);
+
+          })
+
+          this.api.pedidos = pedidos;
+          this.pedidos = pedidos;
+          this.filtrar('','')
+          resolve()
+
+      });
+    })
+
+
   }
 
   ngOnInit() {
-    // this.afAuth.signInAnonymously().then(() => {
-    this.carregar();
-    // })
+
+    this.carregar().then(()=>{
+      this.filtrar('', 'data')
+    });
+
   }
 
   async filtrar(event: string, valid: string) {
 
+    new Date(this.api.pedidos[0].data.toDate())
+    console.log('new Date(this.api.pedidos[0].data.toString()) :', this.api.pedidos[0].data.toDate());
+
     switch (valid) {
-      case 'date':
-        this.eventDate = event ? event + "T00:00:00" : '';          
-        this.newDate = this.eventDate ? new Date(this.eventDate).toString().substr(0, 15) : '';
+      case 'data':
+        //Verifica as data inicial e final
+        if(new Date(this.vDataInicial).toString().indexOf('Invalid Date') >= 0 || new Date(this.vDataInicial).toString() == ""){
+          alert('Preencha a Data Inicial');
+          return;
+        }
+        else if(new Date(this.vDataFinal).toString().indexOf('Invalid Date') >= 0 || new Date(this.vDataFinal).toString() == ""){
+          alert('Preencha a Data Final');
+          return;
+        }
+        else if (this.vDataFinal < this.vDataInicial){
+          alert('Data Final precisa se MAIOR que a Data Inicial');
+          return;
+        }
+
+        this.eventDate = this.vDataInicial ? this.vDataInicial : this.vDataFinal ? this.vDataInicial : '';
+
         break;
       case 'total':
         this.eventTotal = event ? event.toString().toUpperCase() : '';
@@ -170,12 +208,12 @@ export class PedidosComponent implements OnInit {
       this.carregar();
     }else{
 
-      //filtra todos os campos em cada um 
-      this.pedidos = this.api.pedidos.filter(a => 
+      //filtra todos os campos em cada um
+      this.pedidos = this.api.pedidos.filter(a =>
         //filter date
-        (a.data.toDate().toString().substr(0, 15).indexOf(this.newDate ? this.newDate : '') >= 0 )&&
+        (new Date(a.data.toDate()) >= new Date(this.vDataInicial) &&  new Date(a.data.toDate()) <= new Date(this.vDataFinal))&&
         //filter total
-        (a.total.toString().toUpperCase().indexOf(this.eventTotal ? this.eventTotal : '') >= 0) && 
+        (a.total.toString().toUpperCase().indexOf(this.eventTotal ? this.eventTotal : '') >= 0) &&
         //filter delivery
         ( a.cliente.bairro?.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ||
           a.cliente.cep?.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ||
@@ -187,10 +225,10 @@ export class PedidosComponent implements OnInit {
           a.cliente.rua?.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ||
           a.cliente.celular?.toUpperCase().indexOf(this.eventDelivery ? this.eventDelivery : '') >= 0 ) &&
         //filter payment
-        ( a.cliente.bandeira?.toUpperCase().indexOf(this.eventPayment ? this.eventPayment : '') >= 0 || 
+        ( a.cliente.bandeira?.toUpperCase().indexOf(this.eventPayment ? this.eventPayment : '') >= 0 ||
           a.cliente.pagamento?.toUpperCase().indexOf(this.eventPayment ? this.eventPayment : '') >= 0 ) &&
-        // //filter status
-        a.status?.toUpperCase().indexOf(this.eventStatus ? this.eventStatus : '') >= 0
+        //filter status
+          a.status?.toUpperCase().indexOf(this.eventStatus ? this.eventStatus : '') >= 0
 
       );
     }
@@ -198,14 +236,15 @@ export class PedidosComponent implements OnInit {
 
   limparFiltros() {
     this.eventDate = '';
-    this.newDate = '';
+    this.vDataInicial = this.dataHoje + ' 00:00';
+    this.vDataFinal = this.dataHoje + ' 23:59';
     this.eventTotal = '';
     this.eventDelivery = '';
     this.eventPayment = '';
     this.eventStatus = '';
-    var dateControl = document.querySelector("#date");
-    dateControl['value'] = '';
-    this.carregar();
+
+    this.filtrar('', 'data')
+    // this.carregar();
 
   }
 
@@ -239,5 +278,20 @@ export class PedidosComponent implements OnInit {
 
   salvar() {
     this.afs.firestore.collection('config').doc('config').update(this.config)
+  }
+
+ imprimirResumo(pedido, componentID){
+    this.resumoPedido = pedido;
+
+    setTimeout(() => {
+      const printContent = document.getElementById(componentID);
+      const WindowPrt = window.open('', '', 'left=0,top=0,width=900,height=900,toolbar=0,scrollbars=0,status=0');
+      WindowPrt.document.write(printContent.innerHTML);
+      WindowPrt.document.close();
+      WindowPrt.focus();
+      WindowPrt.print();
+      WindowPrt.close();
+    }, 300);
+
   }
 }
