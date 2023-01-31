@@ -1,0 +1,38 @@
+div h1 {
+  font-weight: 500;
+  width: 135px;
+  align-self: center;
+  color: rgb(128, 126, 126);
+}
+
+div input {
+  text-align: center;
+}
+
+
+td div {
+  width: 90%;
+}
+
+mat-progress-bar {
+  height: 6px;
+  border-radius: 10px;
+}
+
+/* th div{
+  display: none;
+}
+
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
+  text-align: center;
+}
+
+.mat-sort-header-container {
+  display: none !important;
+
+}
+
+.mat-sort-header-content {
+  justify-content: center !important;
+
+} */

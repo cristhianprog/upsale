@@ -4,9 +4,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {LiveAnnouncer} from '@angular/cdk/a11y';
 import { AngularFirestore } from "@angular/fire/firestore";
 
-
 import { FireSQL } from 'firesql';
-import firebase from 'firebase/app';
 import 'firebase/firestore';
 
 
@@ -91,9 +89,6 @@ export class RelatorioPedidosStatusComponent implements OnInit, AfterViewInit {
   consultaPedidos(dataInicial, dataFinal): void{
     const hInicial = new Date(dataInicial);
     const hFinal = new Date(dataFinal);
-
-    console.log('hInicial :', hInicial);
-    console.log('hFinal :', hFinal);
 
     const arrayStatus = ['recusado', 'saiu para entrega', 'entregue', 'aguardando', 'preparando']
     let totalStatus = 0;
